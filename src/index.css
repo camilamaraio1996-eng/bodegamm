@@ -5,8 +5,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background-color: #1A1A18;
-  color: #F2EBD9;
+  background-color: #1F2E24;
+  color: #F3EFE7;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
@@ -22,15 +22,15 @@ body {
 }
 
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #1A1A18; }
-::-webkit-scrollbar-thumb { background: #C4A35A; border-radius: 3px; }
+::-webkit-scrollbar-track { background: #1F2E24; }
+::-webkit-scrollbar-thumb { background: #4C6B50; border-radius: 3px; }
 
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 .marquee-track {
-  animation: marquee 32s linear infinite;
+  animation: marquee 38s linear infinite;
   display: flex;
   white-space: nowrap;
 }
@@ -40,3 +40,16 @@ body {
   50%       { transform: translateY(12px) translateX(-50%); }
 }
 .bounce-arrow { animation: bounce-down 1.8s ease-in-out infinite; }
+
+@keyframes float-leaf {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  33%       { transform: translateY(-10px) rotate(3deg) scale(1.02); }
+  66%       { transform: translateY(5px) rotate(-2deg) scale(0.99); }
+}
+.float-leaf { animation: float-leaf 7s ease-in-out infinite; }
+
+@keyframes float-leaf-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-14px) rotate(4deg); }
+}
+.float-leaf-slow { animation: float-leaf-slow 9s ease-in-out infinite; }

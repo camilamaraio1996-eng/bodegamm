@@ -4,11 +4,12 @@ import { SiteProvider } from './context/SiteContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
-import Nosotros from './pages/Nosotros'
+import NuestraSelva from './pages/Nosotros'
 import Menu from './pages/Menu'
 import Galeria from './pages/Galeria'
 import Contacto from './pages/Contacto'
 import Admin from './pages/Admin'
+import TakeAway from './pages/TakeAway'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -23,11 +24,13 @@ function PublicLayout() {
       <Navbar />
       <main>
         <Routes>
-          <Route path="/"         element={<Home />} />
-          <Route path="/nosotros" element={<Nosotros />} />
-          <Route path="/menu"     element={<Menu />} />
-          <Route path="/galeria"  element={<Galeria />} />
-          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/"               element={<Home />} />
+          <Route path="/nuestra-selva"  element={<NuestraSelva />} />
+          <Route path="/nosotros"       element={<NuestraSelva />} />
+          <Route path="/menu"           element={<Menu />} />
+          <Route path="/galeria"        element={<Galeria />} />
+          <Route path="/contacto"       element={<Contacto />} />
+          <Route path="/takeaway"       element={<TakeAway />} />
         </Routes>
       </main>
       <Footer />

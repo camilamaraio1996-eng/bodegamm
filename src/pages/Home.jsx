@@ -4,28 +4,29 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useSite } from '../context/SiteContext'
 
 const C = {
-  gold:      '#C4A35A',
-  cream:     '#F2EBD9',
-  dark:      '#1A1A18',
-  darker:    '#111110',
-  card:      '#232320',
-  verde:     '#2D4A3E',
-  terracota: '#B5533C',
-  muted:     'rgba(242,235,217,0.55)',
-  subtle:    'rgba(242,235,217,0.08)',
+  dark:    '#1F2E24',
+  deep:    '#314D39',
+  mid:     '#4C6B50',
+  light:   '#6B8F6B',
+  moss:    '#8B9E78',
+  beige:   '#D9D2C3',
+  sand:    '#C9BFA8',
+  cream:   '#F3EFE7',
+  gold:    '#B8A96A',
+  muted:   'rgba(243,239,231,0.6)',
+  mutedDark: 'rgba(31,46,36,0.65)',
 }
 
-/* ── Animation helpers ─────────────────────────────────── */
 function FadeUp({ children, delay = 0, style = {} }) {
   const ref = useRef(null)
   const [v, setV] = useState(false)
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.12 })
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.1 })
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [])
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 40 }} animate={v ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay, ease: 'easeOut' }} style={style}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 44 }} animate={v ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.75, delay, ease: [0.25, 0.46, 0.45, 0.94] }} style={style}>
       {children}
     </motion.div>
   )
@@ -35,74 +36,88 @@ function FadeIn({ children, delay = 0, dir = 'up', style = {} }) {
   const ref = useRef(null)
   const [v, setV] = useState(false)
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.12 })
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.1 })
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [])
-  const from = { opacity: 0, x: dir === 'left' ? -60 : dir === 'right' ? 60 : 0, y: dir === 'up' ? 40 : 0 }
+  const from = { opacity: 0, x: dir === 'left' ? -60 : dir === 'right' ? 60 : 0, y: dir === 'up' ? 44 : 0 }
   return (
-    <motion.div ref={ref} initial={from} animate={v ? { opacity: 1, x: 0, y: 0 } : {}} transition={{ duration: 0.8, delay, ease: 'easeOut' }} style={style}>
+    <motion.div ref={ref} initial={from} animate={v ? { opacity: 1, x: 0, y: 0 } : {}} transition={{ duration: 0.85, delay, ease: [0.25, 0.46, 0.45, 0.94] }} style={style}>
       {children}
     </motion.div>
   )
 }
 
-/* ── Data ───────────────────────────────────────────────── */
-const featuredDishes = [
+const featured = [
   {
-    title: 'Picada Lacan',
-    desc: 'Queso dambo, muzzarelitas, surimis, jamón crudo y aceitunas. Para dos que pican tres.',
-    price: '$7.800',
-    img: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=700&q=80',
+    title: 'Tostada Jungle',
+    desc: 'Sourdough artesanal, palta, tomates cherry, semillas tostadas y flores comestibles.',
+    price: '$3.800',
+    img: 'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=700&q=80',
+    tag: 'Brunch',
   },
   {
-    title: "Soupe à l'Oignon",
-    desc: 'La clásica sopa de cebolla francesa gratinada con gruyère. El toque Lacan.',
-    price: '$3.600',
-    img: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=700&q=80',
+    title: 'Flat White MOULI',
+    desc: 'Doble ristretto de origen único, leche oat vaporizada y arte latte de la casa.',
+    price: '$2.200',
+    img: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=80',
+    tag: 'Café',
   },
   {
-    title: 'Milanesa para Compartir',
-    desc: 'Dos milanesas a caballo con papas fritas. El plato de la casa.',
-    price: '$7.800',
-    img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=700&q=80',
+    title: 'Bowl de la Selva',
+    desc: 'Quinoa, verduras asadas de estación, kale crujiente y aliño de tahini con limón.',
+    price: '$5.800',
+    img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=700&q=80',
+    tag: 'Cocina',
+  },
+  {
+    title: 'Aperitivo Verde',
+    desc: 'Gin botánico, pepino, elderflower, tónica artesanal y hierbas frescas.',
+    price: '$4.200',
+    img: 'https://images.unsplash.com/photo-1464219222984-216ebffaaf85?w=700&q=80',
+    tag: 'Tragos',
   },
 ]
 
-const promos = [
-  { label: 'Café Doble + 2 Medialunas', price: '$1.850' },
-  { label: 'Jugo + Tostado', price: '$3.250' },
-  { label: 'Licuado + Tostadas con dips', price: '$3.500' },
-  { label: '3 Empanadas + Copa de Vino', price: '$3.600' },
+const eventos = [
+  { day: 'Jueves', title: 'Jazz Nights', desc: 'Trío en vivo, medianoche en la jungla.', img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=700&q=80' },
+  { day: 'Viernes', title: 'Noches de Vinilo', desc: 'DJ set analógico, tragos de autor.', img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=700&q=80' },
+  { day: 'Domingo', title: 'Brunch Social', desc: 'Brunch largo, música suave, mesa grande.', img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80' },
 ]
 
-/* ── Dish card ──────────────────────────────────────────── */
 function DishCard({ dish, delay }) {
   const [hov, setHov] = useState(false)
   const ref = useRef(null)
   const [v, setV] = useState(false)
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.1 })
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.08 })
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [])
   return (
     <motion.div ref={ref}
       initial={{ opacity: 0, y: 50 }} animate={v ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: 'easeOut' }}
+      transition={{ duration: 0.72, delay, ease: 'easeOut' }}
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ position: 'relative', overflow: 'hidden', cursor: 'pointer', border: `1px solid ${hov ? C.gold : 'rgba(196,163,90,0.12)'}`, transition: 'border-color 0.3s' }}>
-      <div style={{ height: 300, overflow: 'hidden' }}>
+      style={{ position: 'relative', overflow: 'hidden', cursor: 'pointer', background: C.deep, border: `1px solid ${hov ? 'rgba(184,169,106,0.35)' : 'rgba(76,107,80,0.2)'}`, transition: 'border-color 0.35s, transform 0.35s', transform: hov ? 'translateY(-4px)' : 'none' }}>
+
+      <div style={{ position: 'absolute', top: 14, left: 14, zIndex: 3, background: 'rgba(31,46,36,0.85)', backdropFilter: 'blur(8px)', padding: '4px 12px', border: '1px solid rgba(184,169,106,0.3)' }}>
+        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.2em', color: C.gold, textTransform: 'uppercase' }}>{dish.tag}</span>
+      </div>
+
+      <div style={{ height: 280, overflow: 'hidden' }}>
         <motion.img src={dish.img} alt={dish.title}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          animate={{ scale: hov ? 1.06 : 1 }} transition={{ duration: 0.5 }} />
+          animate={{ scale: hov ? 1.07 : 1 }} transition={{ duration: 0.55 }} />
       </div>
+
       <motion.div
-        initial={{ y: '100%' }} animate={{ y: hov ? '0%' : '100%' }} transition={{ duration: 0.32, ease: 'easeOut' }}
-        style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(transparent, rgba(17,17,16,0.97))', padding: '52px 24px 24px' }}>
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#9ca3af', lineHeight: 1.75 }}>{dish.desc}</p>
+        initial={{ y: '100%' }} animate={{ y: hov ? '0%' : '100%' }} transition={{ duration: 0.3, ease: 'easeOut' }}
+        style={{ position: 'absolute', bottom: 80, left: 0, right: 0, background: 'linear-gradient(transparent, rgba(31,46,36,0.96))', padding: '48px 22px 18px' }}>
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: 'rgba(243,239,231,0.8)', lineHeight: 1.7 }}>{dish.desc}</p>
       </motion.div>
-      <div style={{ padding: '20px 24px', background: C.card }}>
+
+      <div style={{ padding: '18px 22px', borderTop: '1px solid rgba(76,107,80,0.2)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: C.cream, fontWeight: 500 }}>{dish.title}</h3>
           <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: C.gold, fontWeight: 600 }}>{dish.price}</span>
@@ -112,118 +127,175 @@ function DishCard({ dish, delay }) {
   )
 }
 
-/* ── Main component ─────────────────────────────────────── */
+function EventCard({ ev, delay }) {
+  const [hov, setHov] = useState(false)
+  const ref = useRef(null)
+  const [v, setV] = useState(false)
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.08 })
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [])
+  return (
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y: 40 }} animate={v ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay }}
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{ position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
+      <div style={{ height: 380, overflow: 'hidden' }}>
+        <motion.img src={ev.img} alt={ev.title}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', filter: hov ? 'brightness(0.55)' : 'brightness(0.45)' }}
+          animate={{ scale: hov ? 1.06 : 1 }} transition={{ duration: 0.6 }} />
+      </div>
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '28px 26px' }}>
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.25em', color: C.gold, textTransform: 'uppercase', marginBottom: 8 }}>{ev.day}</p>
+        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 30, color: C.cream, fontWeight: 500, marginBottom: 8, lineHeight: 1.15 }}>{ev.title}</h3>
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: 'rgba(243,239,231,0.75)', lineHeight: 1.6 }}>{ev.desc}</p>
+        <motion.div animate={{ width: hov ? '100%' : 0 }} transition={{ duration: 0.35 }}
+          style={{ height: 1.5, background: C.gold, marginTop: 18 }} />
+      </div>
+    </motion.div>
+  )
+}
+
 export default function Home() {
   const { data } = useSite()
   const promos = data.promos.filter(p => p.visible !== false)
   const heroRef = useRef(null)
   const { scrollY } = useScroll()
-  const imgY = useTransform(scrollY, [0, 700], [0, 160])
+  const imgY = useTransform(scrollY, [0, 800], [0, 180])
+  const textY = useTransform(scrollY, [0, 500], [0, 60])
 
   return (
-    <main>
-      {/* ══ HERO ══════════════════════════════════════════ */}
-      <section ref={heroRef} style={{ position: 'relative', height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div>
+      {/* ══ HERO ══════════════════════════════════════════════ */}
+      <section ref={heroRef} style={{ position: 'relative', height: '100vh', minHeight: 640, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <motion.div style={{ position: 'absolute', inset: '-20%', y: imgY }}>
-          <img src="https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=1800&q=85" alt="Je Suis Lacan"
-            style={{ width: '100%', height: '140%', objectFit: 'cover' }} />
+          <img
+            src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1800&q=85"
+            alt="MOULI — Café en Palermo"
+            style={{ width: '100%', height: '140%', objectFit: 'cover' }}
+          />
         </motion.div>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(26,26,24,0.45) 0%, rgba(26,26,24,0.65) 55%, rgba(26,26,24,0.97) 100%)' }} />
 
-        <div style={{ position: 'relative', textAlign: 'center', padding: '0 24px', maxWidth: 900, zIndex: 2 }}>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, letterSpacing: '0.45em', color: C.gold, textTransform: 'uppercase', marginBottom: 22 }}>
-            — San Telmo, Buenos Aires —
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(31,46,36,0.35) 0%, rgba(31,46,36,0.6) 50%, rgba(20,32,22,0.96) 100%)' }} />
+
+        <motion.div style={{ position: 'relative', textAlign: 'center', padding: '0 24px', maxWidth: 860, zIndex: 2, y: textY }}>
+          <motion.p
+            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25 }}
+            style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.48em', color: C.gold, textTransform: 'uppercase', marginBottom: 24, opacity: 0.9 }}>
+            — Palermo, Buenos Aires —
           </motion.p>
 
-          <motion.h1 initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.4 }}
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(58px, 10vw, 120px)', color: C.cream, lineHeight: 0.95, marginBottom: 26, fontWeight: 600, letterSpacing: '0.05em' }}>
-            Je Suis Lacan
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(72px, 13vw, 148px)', color: C.cream, lineHeight: 0.9, marginBottom: 30, fontWeight: 500, letterSpacing: '0.06em' }}>
+            MOULI
           </motion.h1>
 
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.62 }}
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: C.cream, opacity: 0.7, letterSpacing: '0.3em', textTransform: 'uppercase', marginBottom: 10 }}>
-            Bar · Bistró · Café · Almacén
+          <motion.div
+            initial={{ width: 0 }} animate={{ width: 64 }} transition={{ delay: 0.85, duration: 0.7 }}
+            style={{ height: 1, background: C.gold, margin: '0 auto 28px', opacity: 0.7 }} />
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.9 }}
+            style={{ fontFamily: "'EB Garamond', serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: C.cream, fontStyle: 'italic', opacity: 0.85, marginBottom: 8, lineHeight: 1.5 }}>
+            Un café de especialidad. Un restaurante.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.05 }}
+            style={{ fontFamily: "'EB Garamond', serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: C.gold, fontStyle: 'italic', marginBottom: 48, lineHeight: 1.5 }}>
+            Y la selva que despierta en la ciudad.
           </motion.p>
 
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.78 }}
-            style={{ fontFamily: "'EB Garamond', serif", fontSize: 22, color: C.gold, fontStyle: 'italic', marginBottom: 44 }}>
-            "Lo real, lo imaginario, lo simbólico."
-          </motion.p>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.95 }}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.2 }}
             style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/menu">
-              <button style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.cream, background: C.verde, border: `2px solid ${C.verde}`, padding: '14px 38px', cursor: 'pointer', transition: 'all 0.25s' }}
-                onMouseEnter={e => { e.target.style.background = '#1e3329'; e.target.style.borderColor = '#1e3329' }}
-                onMouseLeave={e => { e.target.style.background = C.verde; e.target.style.borderColor = C.verde }}>
-                Ver la Carta
+            <Link to="/menu" style={{ textDecoration: 'none' }}>
+              <button
+                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.dark, background: C.gold, border: `2px solid ${C.gold}`, padding: '15px 40px', cursor: 'pointer', transition: 'all 0.28s' }}
+                onMouseEnter={e => { e.target.style.background = 'transparent'; e.target.style.color = C.gold }}
+                onMouseLeave={e => { e.target.style.background = C.gold; e.target.style.color = C.dark }}>
+                VER MENÚ
               </button>
             </Link>
-            <Link to="/contacto">
-              <button style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.gold, background: 'transparent', border: `2px solid ${C.gold}`, padding: '14px 38px', cursor: 'pointer', transition: 'all 0.25s' }}
-                onMouseEnter={e => { e.target.style.background = C.gold; e.target.style.color = C.dark }}
-                onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = C.gold }}>
-                Cómo Llegar
+            <Link to="/contacto" style={{ textDecoration: 'none' }}>
+              <button
+                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.cream, background: 'transparent', border: `2px solid rgba(243,239,231,0.45)`, padding: '15px 40px', cursor: 'pointer', transition: 'all 0.28s' }}
+                onMouseEnter={e => { e.target.style.borderColor = C.cream; e.target.style.background = 'rgba(243,239,231,0.08)' }}
+                onMouseLeave={e => { e.target.style.borderColor = 'rgba(243,239,231,0.45)'; e.target.style.background = 'transparent' }}>
+                RESERVAR MESA
               </button>
             </Link>
           </motion.div>
-        </div>
+        </motion.div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-          style={{ position: 'absolute', bottom: 38, left: '50%', zIndex: 2 }}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}
+          style={{ position: 'absolute', bottom: 36, left: '50%', zIndex: 2 }}
           className="bounce-arrow">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={C.gold} strokeWidth="1.8"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={C.gold} strokeWidth="1.5" opacity="0.7"><polyline points="6 9 12 15 18 9"/></svg>
         </motion.div>
       </section>
 
-      {/* ══ MARQUEE ═══════════════════════════════════════ */}
-      <div style={{ background: C.darker, borderTop: `1px solid ${C.gold}`, borderBottom: `1px solid ${C.gold}`, padding: '16px 0', overflow: 'hidden' }}>
+      {/* ══ MARQUEE ═══════════════════════════════════════════ */}
+      <div style={{ background: C.deep, borderTop: `1px solid rgba(184,169,106,0.2)`, borderBottom: `1px solid rgba(184,169,106,0.2)`, padding: '14px 0', overflow: 'hidden' }}>
         <div className="marquee-track">
           {[1, 2].map(k => (
-            <span key={k} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, fontWeight: 600, letterSpacing: '0.3em', color: C.gold, textTransform: 'uppercase' }}>
-              &nbsp;&nbsp;CAFÉ&nbsp;&nbsp;·&nbsp;&nbsp;MEDIALUNAS&nbsp;&nbsp;·&nbsp;&nbsp;PICADA LACAN&nbsp;&nbsp;·&nbsp;&nbsp;SOUPE À L'OIGNON&nbsp;&nbsp;·&nbsp;&nbsp;MALBEC&nbsp;&nbsp;·&nbsp;&nbsp;EMPANADAS FRITAS&nbsp;&nbsp;·&nbsp;&nbsp;CHOCOTORTA&nbsp;&nbsp;·&nbsp;&nbsp;SAN TELMO&nbsp;&nbsp;·&nbsp;&nbsp;TOSTADOS&nbsp;&nbsp;·&nbsp;&nbsp;LIVE MUSIC&nbsp;&nbsp;·&nbsp;&nbsp;
+            <span key={k} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontWeight: 500, letterSpacing: '0.32em', color: C.gold, textTransform: 'uppercase', opacity: 0.85 }}>
+              &nbsp;&nbsp;CAFÉ DE ESPECIALIDAD&nbsp;&nbsp;·&nbsp;&nbsp;BRUNCH&nbsp;&nbsp;·&nbsp;&nbsp;PALERMO&nbsp;&nbsp;·&nbsp;&nbsp;JAZZ NIGHTS&nbsp;&nbsp;·&nbsp;&nbsp;PLANTAS&nbsp;&nbsp;·&nbsp;&nbsp;SELVA URBANA&nbsp;&nbsp;·&nbsp;&nbsp;COCINA DE ESTACIÓN&nbsp;&nbsp;·&nbsp;&nbsp;APERITIVO VERDE&nbsp;&nbsp;·&nbsp;&nbsp;ENCUENTROS&nbsp;&nbsp;·&nbsp;&nbsp;
             </span>
           ))}
         </div>
       </div>
 
-      {/* ══ ABOUT ═════════════════════════════════════════ */}
-      <section style={{ padding: '110px 24px', maxWidth: 1280, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 72, alignItems: 'center' }}>
+      {/* ══ NUESTRA SELVA (teaser) ════════════════════════════ */}
+      <section style={{ padding: '110px 28px', maxWidth: 1320, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 80, alignItems: 'center' }}>
           <FadeIn dir="left">
             <div style={{ position: 'relative' }}>
-              <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80" alt="Interior"
-                style={{ width: '100%', height: 520, objectFit: 'cover' }} />
-              <div style={{ position: 'absolute', bottom: -20, right: -20, background: C.gold, padding: '20px 28px', zIndex: 2 }}>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 34, color: C.dark, lineHeight: 1, fontWeight: 700 }}>1786</p>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: C.dark, letterSpacing: '0.12em', textTransform: 'uppercase', marginTop: 2 }}>Pasaje San Lorenzo</p>
+              <div style={{ overflow: 'hidden' }}>
+                <img src="/jungla-escondida.jpg" alt="La selva interior de MOULI"
+                  style={{ width: '100%', height: 560, objectFit: 'cover' }} className="float-leaf-slow" />
+              </div>
+              <div style={{ position: 'absolute', bottom: -22, right: -22, background: C.gold, padding: '18px 26px', zIndex: 2 }}>
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, color: C.dark, lineHeight: 1, fontWeight: 700 }}>1786</p>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, color: C.dark, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 3 }}>Thames, Palermo</p>
               </div>
             </div>
           </FadeIn>
 
-          <FadeIn dir="right" delay={0.1}>
+          <FadeIn dir="right" delay={0.12}>
             <div>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.32em', color: C.gold, textTransform: 'uppercase', marginBottom: 16 }}>Balcarce 749 · San Telmo</p>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4vw, 50px)', color: C.cream, lineHeight: 1.15, marginBottom: 24, fontWeight: 500 }}>
-                Una esquina declarada<br /><em style={{ color: C.gold, fontStyle: 'italic' }}>de interés cultural</em>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.36em', color: C.gold, textTransform: 'uppercase', marginBottom: 18 }}>Nuestra Selva</p>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 4vw, 54px)', color: C.cream, lineHeight: 1.1, marginBottom: 28, fontWeight: 400 }}>
+                La jungla escondida<br /><em style={{ color: C.gold, fontStyle: 'italic' }}>en Palermo</em>
               </h2>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: C.muted, lineHeight: 1.9, marginBottom: 32 }}>
-                Sobre el Pasaje San Lorenzo — el más antiguo de Buenos Aires, trazado en 1786 — funciona este espacio que no termina de decidir si es un bar, un café, una galería o un estado de ánimo. Y eso está bien.
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: C.muted, lineHeight: 1.95, marginBottom: 28 }}>
+                MOULI nació de una pregunta simple: ¿dónde queremos estar cuando necesitamos una pausa? La respuesta fue siempre la misma — en un lugar con plantas, buen café y tiempo real para hablar.
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 36 }}>
-                {['Café, desayunos y meriendas artesanales', 'Música en vivo — noches de semana', 'Bar con vinos Mendoza, cervezas y tragos', 'Pastelería propia elaborada en casa', 'Take away y delivery disponible'].map(t => (
-                  <div key={t} style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
-                    <span style={{ fontSize: 18, color: C.gold }}>·</span>
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, color: C.cream }}>{t}</span>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: C.muted, lineHeight: 1.95, marginBottom: 40 }}>
+                Construimos eso en el corazón de Palermo. Una jungla urbana donde la vegetación trepadora convive con el espresso de origen único y la cocina de estación.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 44 }}>
+                {[
+                  'Café de especialidad, filtrado y cold brew',
+                  'Cocina honesta con productos de estación',
+                  'Más de 40 especies de plantas en el espacio',
+                  'Eventos culturales, jazz y noches de vinilo',
+                  'Espacio artístico y punto de encuentro',
+                ].map(t => (
+                  <div key={t} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: 16, color: C.mid, marginTop: 2 }}>✦</span>
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, color: C.cream, lineHeight: 1.5 }}>{t}</span>
                   </div>
                 ))}
               </div>
-              <Link to="/nosotros">
-                <button style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.gold, background: 'transparent', border: `1.5px solid ${C.gold}`, padding: '12px 28px', cursor: 'pointer', transition: 'all 0.25s' }}
+              <Link to="/nuestra-selva" style={{ textDecoration: 'none' }}>
+                <button
+                  style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.gold, background: 'transparent', border: `1.5px solid ${C.gold}`, padding: '13px 30px', cursor: 'pointer', transition: 'all 0.28s' }}
                   onMouseEnter={e => { e.target.style.background = C.gold; e.target.style.color = C.dark }}
                   onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = C.gold }}>
-                  Nuestra Historia
+                  Conocer Nuestra Selva
                 </button>
               </Link>
             </div>
@@ -231,94 +303,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ FEATURED DISHES ═══════════════════════════════ */}
-      <section style={{ background: C.darker, padding: '100px 24px' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <FadeUp style={{ textAlign: 'center', marginBottom: 64 }}>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.32em', color: C.gold, textTransform: 'uppercase', marginBottom: 12 }}>Lo que no podés perderte</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4vw, 50px)', color: C.cream, fontWeight: 500 }}>Platos Destacados</h2>
+      {/* ══ EXPERIENCIA MOULI ════════════════════════════════ */}
+      <section style={{ position: 'relative', padding: '110px 28px', overflow: 'hidden', background: C.deep }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto' }}>
+          <FadeUp style={{ textAlign: 'center', marginBottom: 72 }}>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.36em', color: C.gold, textTransform: 'uppercase', marginBottom: 14 }}>Lo que somos</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 4.5vw, 56px)', color: C.cream, fontWeight: 400, marginBottom: 18 }}>La Experiencia MOULI</h2>
+            <div style={{ width: 48, height: 1, background: C.gold, margin: '0 auto', opacity: 0.6 }} />
           </FadeUp>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 28 }}>
-            {featuredDishes.map((d, i) => <DishCard key={d.title} dish={d} delay={i * 0.12} />)}
-          </div>
-          <FadeUp style={{ textAlign: 'center', marginTop: 52 }}>
-            <Link to="/menu">
-              <button style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.gold, background: 'transparent', border: `1.5px solid ${C.gold}`, padding: '14px 40px', cursor: 'pointer', transition: 'all 0.25s' }}
-                onMouseEnter={e => { e.target.style.background = C.gold; e.target.style.color = C.dark }}
-                onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = C.gold }}>
-                Ver Carta Completa
-              </button>
-            </Link>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* ══ RSI EXPERIENCIA ═══════════════════════════════ */}
-      <section style={{ position: 'relative', padding: '100px 24px', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0 }}>
-          <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=1600&q=75" alt=""
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,17,16,0.9)' }} />
-        </div>
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1100, margin: '0 auto' }}>
-          <FadeUp style={{ textAlign: 'center', marginBottom: 64 }}>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.32em', color: C.gold, textTransform: 'uppercase', marginBottom: 12 }}>La triada</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4vw, 50px)', color: C.cream, fontWeight: 500 }}>RSI — La Experiencia Lacan</h2>
-          </FadeUp>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 48 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 28 }}>
             {[
-              { label: 'Lo Real', sub: 'La comida, el barrio, la gente' },
-              { label: 'Lo Imaginario', sub: 'La atmósfera, la música, la tarde' },
-              { label: 'Lo Simbólico', sub: 'El nombre, la cultura, la identidad' },
-              { label: '1786', sub: 'Pasaje San Lorenzo' },
-            ].map(({ label, sub }) => (
-              <FadeUp key={label} style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: label.length <= 4 ? 56 : 38, color: C.gold, lineHeight: 1, marginBottom: 10, fontWeight: 600 }}>{label}</div>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: C.cream, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.65 }}>{sub}</p>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ MÚSICA EN VIVO ════════════════════════════════ */}
-      <section style={{ background: `linear-gradient(135deg, #1a0a08 0%, #6b2d1f 50%, #1a0a08 100%)`, padding: '100px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'url(https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=1200&q=70) center/cover', opacity: 0.12 }} />
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: 700, margin: '0 auto' }}>
-          <FadeUp>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.4em', color: 'rgba(196,163,90,0.8)', textTransform: 'uppercase', marginBottom: 16 }}>En vivo</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(42px, 7vw, 78px)', color: C.cream, lineHeight: 1.05, marginBottom: 20, fontWeight: 600 }}>
-              MÚSICA<br /><em style={{ color: C.gold, fontStyle: 'italic' }}>en Vivo</em>
-            </h2>
-            <div style={{ width: 56, height: 1.5, background: C.gold, margin: '0 auto 28px' }} />
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, color: 'rgba(242,235,217,0.8)', lineHeight: 1.85, marginBottom: 40 }}>
-              Noches con shows que no pertenecen al bar.<br />
-              Eso es exactamente lo que los hace únicos.
-            </p>
-            <a href="https://instagram.com/jesuislacan" target="_blank" rel="noopener noreferrer">
-              <button style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.dark, background: C.gold, border: 'none', padding: '16px 44px', cursor: 'pointer', transition: 'background 0.25s' }}
-                onMouseEnter={e => e.target.style.background = '#d4b36a'}
-                onMouseLeave={e => e.target.style.background = C.gold}>
-                Seguinos en Instagram
-              </button>
-            </a>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* ══ PROMOS ════════════════════════════════════════ */}
-      <section style={{ background: C.dark, padding: '100px 24px' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <FadeUp style={{ textAlign: 'center', marginBottom: 60 }}>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.32em', color: C.gold, textTransform: 'uppercase', marginBottom: 12 }}>Del día</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4vw, 50px)', color: C.cream, fontWeight: 500 }}>Promos de la Casa</h2>
-          </FadeUp>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 20 }}>
-            {promos.map(({ label, price, id }, i) => (
-              <FadeUp key={id || label} delay={i * 0.08}>
-                <div style={{ background: C.card, padding: '32px 28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 150, border: '1px solid rgba(196,163,90,0.1)' }}>
-                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: C.cream, fontWeight: 500, lineHeight: 1.35 }}>{label}</p>
-                  <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 30, color: C.gold, fontWeight: 700, marginTop: 16 }}>{price}</span>
+              {
+                icon: '🌱',
+                label: 'Lo Natural',
+                sub: 'Las plantas, la madera, el café, la luz',
+                text: 'Más de cuarenta especies viven en el espacio. La madera sin tratar, la luz filtrada entre hojas, el aroma del espresso. Lo natural no es una estética — es la estructura del lugar.',
+                color: C.mid,
+              },
+              {
+                icon: '☕',
+                label: 'Lo Sensorial',
+                sub: 'Los aromas, la música, la experiencia',
+                text: 'El flat white que llega en taza de cerámica artesanal. La playlist que nunca repite. La textura del sourdough tostado. MOULI es un espacio que se vive a través de los sentidos.',
+                color: C.gold,
+              },
+              {
+                icon: '🌿',
+                label: 'Lo Humano',
+                sub: 'Los encuentros, las charlas, la pausa',
+                text: 'No diseñamos MOULI para el delivery. Lo construimos para quedarse. Para la conversación que se alarga, el trabajo que avanza mejor con plantas alrededor, la reunión que termina siendo algo más.',
+                color: C.moss,
+              },
+            ].map(({ icon, label, sub, text, color }, i) => (
+              <FadeUp key={label} delay={i * 0.1}>
+                <div style={{ padding: '44px 34px', background: 'rgba(31,46,36,0.6)', border: '1px solid rgba(76,107,80,0.25)', height: '100%', backdropFilter: 'blur(8px)' }}>
+                  <div style={{ fontSize: 28, marginBottom: 20 }}>{icon}</div>
+                  <div style={{ width: 36, height: 2, background: color, marginBottom: 22 }} />
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, color, fontWeight: 500, marginBottom: 8 }}>{label}</h3>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.muted, marginBottom: 22 }}>{sub}</p>
+                  <p style={{ fontFamily: "'EB Garamond', serif", fontSize: 18, color: C.muted, lineHeight: 1.85 }}>{text}</p>
                 </div>
               </FadeUp>
             ))}
@@ -326,33 +349,166 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ CTA WHATSAPP ══════════════════════════════════ */}
-      <section style={{ position: 'relative', padding: '120px 24px', textAlign: 'center', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0 }}>
-          <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1400&q=75" alt=""
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,17,16,0.85)' }} />
-        </div>
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: 640, margin: '0 auto' }}>
-          <FadeUp>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.3em', color: C.gold, textTransform: 'uppercase', marginBottom: 16 }}>Reservas & consultas</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 5vw, 58px)', color: C.cream, lineHeight: 1.15, marginBottom: 24, fontWeight: 500 }}>
-              ¿Querés hacer<br /><em style={{ color: C.gold, fontStyle: 'italic' }}>una reserva?</em>
-            </h2>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: C.muted, lineHeight: 1.8, marginBottom: 40 }}>
-              Escribinos por WhatsApp y te respondemos al toque.<br />
-              Take away y delivery disponible.
-            </p>
-            <a href="https://wa.me/541131231586" target="_blank" rel="noopener noreferrer">
-              <button style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#fff', background: '#25D366', border: 'none', padding: '16px 48px', cursor: 'pointer', transition: 'background 0.25s' }}
-                onMouseEnter={e => e.target.style.background = '#1da851'}
-                onMouseLeave={e => e.target.style.background = '#25D366'}>
-                Escribir por WhatsApp
+      {/* ══ MENÚ DESTACADO ═══════════════════════════════════ */}
+      <section style={{ padding: '110px 28px', background: C.dark }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto' }}>
+          <FadeUp style={{ textAlign: 'center', marginBottom: 72 }}>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.36em', color: C.gold, textTransform: 'uppercase', marginBottom: 14 }}>Lo que no podés perderte</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 4.5vw, 56px)', color: C.cream, fontWeight: 400 }}>Menú Destacado</h2>
+          </FadeUp>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+            {featured.map((d, i) => <DishCard key={d.title} dish={d} delay={i * 0.1} />)}
+          </div>
+          <FadeUp style={{ textAlign: 'center', marginTop: 56 }}>
+            <Link to="/menu" style={{ textDecoration: 'none' }}>
+              <button
+                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.gold, background: 'transparent', border: `1.5px solid ${C.gold}`, padding: '15px 44px', cursor: 'pointer', transition: 'all 0.28s' }}
+                onMouseEnter={e => { e.target.style.background = C.gold; e.target.style.color = C.dark }}
+                onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = C.gold }}>
+                VER CARTA COMPLETA
               </button>
-            </a>
+            </Link>
           </FadeUp>
         </div>
       </section>
-    </main>
+
+      {/* ══ EVENTOS EN LA JUNGLA ═════════════════════════════ */}
+      <section style={{ position: 'relative', padding: '110px 28px', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=1600&q=70" alt=""
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,32,22,0.88)' }} />
+        </div>
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1320, margin: '0 auto' }}>
+          <FadeUp style={{ textAlign: 'center', marginBottom: 72 }}>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.36em', color: C.gold, textTransform: 'uppercase', marginBottom: 14 }}>Agenda semanal</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 4.5vw, 56px)', color: C.cream, fontWeight: 400 }}>Eventos en la Jungla</h2>
+          </FadeUp>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+            {eventos.map((ev, i) => <EventCard key={ev.title} ev={ev} delay={i * 0.1} />)}
+          </div>
+          <FadeUp style={{ textAlign: 'center', marginTop: 56 }}>
+            <Link to="/galeria" style={{ textDecoration: 'none' }}>
+              <button
+                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.cream, background: 'transparent', border: `1.5px solid rgba(243,239,231,0.4)`, padding: '15px 44px', cursor: 'pointer', transition: 'all 0.28s' }}
+                onMouseEnter={e => { e.target.style.borderColor = C.cream }}
+                onMouseLeave={e => { e.target.style.borderColor = 'rgba(243,239,231,0.4)' }}>
+                VER AGENDA COMPLETA
+              </button>
+            </Link>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ══ PRÓXIMO EVENTO BANNER ═══════════════════════════ */}
+      <section style={{ background: C.dark, borderTop: '1px solid rgba(184,169,106,0.18)', borderBottom: '1px solid rgba(184,169,106,0.18)' }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
+          <div style={{ overflow: 'hidden', minHeight: 380 }}>
+            <img src="/banner-evento.jpg" alt="Jazz en la Jungla"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', minHeight: 380, display: 'block' }} />
+          </div>
+          <FadeUp style={{ display: 'flex' }}>
+            <div style={{ padding: '64px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%' }}>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.4em', color: C.gold, textTransform: 'uppercase', display: 'inline-block', marginBottom: 20, background: 'rgba(184,169,106,0.1)', padding: '5px 14px', border: '1px solid rgba(184,169,106,0.2)', width: 'fit-content' }}>
+                ✦ Próximo Evento
+              </span>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 4vw, 54px)', color: C.cream, fontWeight: 400, marginBottom: 20, lineHeight: 1.1 }}>
+                Jazz en la Jungla
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 36 }}>
+                {[
+                  { icon: '📅', text: 'Martes 19/05 · 20:30 hs' },
+                  { icon: '📍', text: 'Borges 2205, Palermo' },
+                  { icon: '🎷', text: 'Trío de jazz en vivo · Entrada libre' },
+                ].map(({ icon, text }) => (
+                  <div key={text} style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+                    <span style={{ fontSize: 16 }}>{icon}</span>
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, color: C.muted, lineHeight: 1.5 }}>{text}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+                <a href="https://wa.me/541144445678" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                  <button
+                    style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.dark, background: C.gold, border: 'none', padding: '13px 32px', cursor: 'pointer', transition: 'background 0.25s' }}
+                    onMouseEnter={e => e.target.style.background = '#cfc080'}
+                    onMouseLeave={e => e.target.style.background = C.gold}>
+                    Reservar lugar
+                  </button>
+                </a>
+                <Link to="/galeria" style={{ textDecoration: 'none' }}>
+                  <button
+                    style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.gold, background: 'transparent', border: `1.5px solid rgba(184,169,106,0.45)`, padding: '13px 32px', cursor: 'pointer', transition: 'all 0.25s' }}
+                    onMouseEnter={e => { e.target.style.borderColor = C.gold }}
+                    onMouseLeave={e => { e.target.style.borderColor = 'rgba(184,169,106,0.45)' }}>
+                    Ver agenda
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ══ PROMOS ═══════════════════════════════════════════ */}
+      <section style={{ background: C.deep, padding: '100px 28px' }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto' }}>
+          <FadeUp style={{ textAlign: 'center', marginBottom: 60 }}>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.36em', color: C.gold, textTransform: 'uppercase', marginBottom: 14 }}>Del día</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4vw, 50px)', color: C.cream, fontWeight: 400 }}>Combos de la Casa</h2>
+          </FadeUp>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 20 }}>
+            {promos.map(({ label, price, id }, i) => (
+              <FadeUp key={id || label} delay={i * 0.08}>
+                <div style={{ background: 'rgba(31,46,36,0.7)', padding: '34px 30px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 158, border: '1px solid rgba(76,107,80,0.2)', backdropFilter: 'blur(8px)' }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 21, color: C.cream, fontWeight: 400, lineHeight: 1.4 }}>{label}</p>
+                  <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, color: C.gold, fontWeight: 600, marginTop: 18 }}>${price}</span>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ RESERVAS CTA ═════════════════════════════════════ */}
+      <section style={{ position: 'relative', padding: '120px 28px', textAlign: 'center', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <img src="/jungla-2.jpg" alt=""
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(20,32,22,0.9) 0%, rgba(31,46,36,0.85) 100%)' }} />
+        </div>
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 660, margin: '0 auto' }}>
+          <FadeUp>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.36em', color: C.gold, textTransform: 'uppercase', marginBottom: 18 }}>Reservas & consultas</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 5vw, 60px)', color: C.cream, lineHeight: 1.1, marginBottom: 26, fontWeight: 400 }}>
+              ¿Querés reservar<br /><em style={{ color: C.gold, fontStyle: 'italic' }}>tu mesa?</em>
+            </h2>
+            <div style={{ width: 48, height: 1, background: C.gold, margin: '0 auto 28px', opacity: 0.6 }} />
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: C.muted, lineHeight: 1.9, marginBottom: 44 }}>
+              Escribinos por WhatsApp y confirmamos enseguida.<br />
+              También podés visitarnos sin reserva — siempre hay lugar en la jungla.
+            </p>
+            <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <a href="https://wa.me/541144445678" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                <button
+                  style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.dark, background: C.gold, border: 'none', padding: '16px 44px', cursor: 'pointer', transition: 'background 0.28s' }}
+                  onMouseEnter={e => e.target.style.background = '#cfc080'}
+                  onMouseLeave={e => e.target.style.background = C.gold}>
+                  RESERVAR EXPERIENCIA
+                </button>
+              </a>
+              <Link to="/contacto" style={{ textDecoration: 'none' }}>
+                <button
+                  style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.cream, background: 'transparent', border: `1.5px solid rgba(243,239,231,0.4)`, padding: '16px 44px', cursor: 'pointer', transition: 'all 0.28s' }}
+                  onMouseEnter={e => { e.target.style.borderColor = C.cream }}
+                  onMouseLeave={e => { e.target.style.borderColor = 'rgba(243,239,231,0.4)' }}>
+                  VER CONTACTO
+                </button>
+              </Link>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+    </div>
   )
 }

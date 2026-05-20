@@ -1,140 +1,116 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 
-// ─── Default data ─────────────────────────────────────────
 export const DEFAULT_DATA = {
   info: {
-    name:      'Je Suis Lacan',
-    tagline:   'Bar · Bistró · Café · Almacén',
-    address:   'Balcarce 749, San Telmo, CABA',
-    phone:     '11 3123-1586',
-    whatsapp:  '541131231586',
-    instagram: 'jesuislacan',
+    name:      'MOULI',
+    tagline:   'Café · Cocina · Encuentros',
+    address:   'Thames 1786, Palermo, CABA',
+    phone:     '11 4444-5678',
+    whatsapp:  '541144445678',
+    instagram: 'mouli.palermo',
     facebook:  '',
     hours: [
-      { day: 'Martes a Domingo', time: '10:00 — 23:45' },
+      { day: 'Martes a Domingo', time: '09:00 — 00:00' },
       { day: 'Lunes',            time: 'Cerrado' },
     ],
-    mapsUrl: 'https://maps.google.com/?q=Balcarce+749+San+Telmo+Buenos+Aires',
+    mapsUrl: 'https://maps.google.com/?q=Thames+1786+Palermo+Buenos+Aires',
   },
 
   images: {
-    hero:    'https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=1800&q=85',
-    about:   'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80',
-    music:   'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=1600&q=75',
-    nosotros:'https://images.unsplash.com/photo-1601933513793-9b0a13c4bb28?w=1600&q=80',
-    barrio:  'https://images.unsplash.com/photo-1543168256-418811576931?w=800&q=80',
+    hero:     'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1800&q=85',
+    about:    'https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=900&q=80',
+    music:    'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=1600&q=75',
+    nosotros: 'https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=1600&q=80',
+    barrio:   'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80',
   },
 
   promos: [
-    { id: 'pr1', label: 'Café Doble + 2 Medialunas', price: '1850', visible: true },
-    { id: 'pr2', label: 'Jugo + Tostado',             price: '3250', visible: true },
-    { id: 'pr3', label: 'Licuado + Tostadas con dips',price: '3500', visible: true },
-    { id: 'pr4', label: '3 Empanadas + Copa de Vino', price: '3600', visible: true },
+    { id: 'pr1', label: 'Flat White + Tostada Jungle',  price: '4200', visible: true },
+    { id: 'pr2', label: 'Bowl de la Selva + Jugo',      price: '5800', visible: true },
+    { id: 'pr3', label: 'Brunch MOULI (2 personas)',     price: '9500', visible: true },
+    { id: 'pr4', label: 'Aperitivo + Tabla de Origen',  price: '7200', visible: true },
   ],
 
   menu: {
-    takeaway: {
-      label: 'Take Away',
+    cafe: {
+      label: 'Café',
       items: [
-        { id: 'ta1', name: 'Café con leche',   description: 'En vaso o taza grande, leche cremosa.',          price: '1400', badge: '', visible: true },
-        { id: 'ta2', name: 'Cortado',           description: 'Espresso con un toque de leche.',               price: '1200', badge: '', visible: true },
-        { id: 'ta3', name: 'Cappuccino',        description: 'Espresso, leche vaporizada y espuma.',           price: '1600', badge: '', visible: true },
-        { id: 'ta4', name: 'Té / Infusiones',   description: 'Selección de bolsitas importadas.',              price: '1200', badge: '', visible: true },
-        { id: 'ta5', name: 'Medialunas x2',     description: 'De manteca, recién horneadas.',                 price: '900',  badge: '', visible: true },
-        { id: 'ta6', name: 'Tostado simple',    description: 'Jamón y queso en pan de miga.',                 price: '1800', badge: '', visible: true },
-        { id: 'ta7', name: 'Tostado completo',  description: 'Jamón, queso, tomate y lechuga.',               price: '2200', badge: '', visible: true },
-        { id: 'ta8', name: 'Empanada frita',    description: 'De carne cortada a cuchillo. Por unidad.',      price: '800',  badge: '', visible: true },
+        { id: 'ca1', name: 'Espresso',      description: 'Simple shot. Blend de origen único, tueste claro.',          price: '1600', badge: '', visible: true },
+        { id: 'ca2', name: 'Cortado',       description: 'Espresso con un toque de leche cremosa.',                    price: '1800', badge: '', visible: true },
+        { id: 'ca3', name: 'Flat White',    description: 'Doble ristretto con leche vaporizada, textura sedosa.',      price: '2200', badge: 'Signature', visible: true },
+        { id: 'ca4', name: 'Cappuccino',    description: 'Espresso, leche vaporizada y micro espuma.',                 price: '2200', badge: '', visible: true },
+        { id: 'ca5', name: 'Cold Brew',     description: 'Extracción en frío 18 hs. Solo o con leche.',               price: '2600', badge: '', visible: true },
+        { id: 'ca6', name: 'Filtrado',      description: 'Método Chemex o V60 según la variedad del día.',             price: '2400', badge: '', visible: true },
+        { id: 'ca7', name: 'Matcha Latte',  description: 'Matcha ceremonial japonés, leche oat.',                     price: '2800', badge: '', visible: true },
+        { id: 'ca8', name: 'Té & Infusiones',description: 'Selección de blends naturales. Copa de aromas.',           price: '1800', badge: '', visible: true },
+      ],
+    },
+    brunch: {
+      label: 'Brunch',
+      items: [
+        { id: 'br1', name: 'Tostada Jungle',    description: 'Sourdough, palta, tomates cherry, semillas y flores.',   price: '3800', badge: 'Estrella', visible: true },
+        { id: 'br2', name: 'Huevos MOULI',      description: 'Huevos pochados, tomatines asados, pesto y ricotta.',   price: '4200', badge: '', visible: true },
+        { id: 'br3', name: 'Granola Bowl',      description: 'Granola artesanal, yogur natural, miel, frutas.',       price: '3200', badge: '', visible: true },
+        { id: 'br4', name: 'Porridge Selva',    description: 'Avena cremosa, plátano, manteca de maní, cacao.',       price: '3000', badge: '', visible: true },
+        { id: 'br5', name: 'Sandwich de Campo', description: 'Pan casero, mozzarella, tomate seco, rúcula, pesto.',   price: '4600', badge: '', visible: true },
+        { id: 'br6', name: 'French Toast',      description: 'Pan brioche, frutos rojos, crema de avellanas.',        price: '4200', badge: '', visible: true },
       ],
     },
     pasteleria: {
       label: 'Pastelería',
       items: [
-        { id: 'pa1', name: 'Croissant de manteca', description: 'Elaborado en casa, hojaldrado.',                        price: '1400', badge: '', visible: true },
-        { id: 'pa2', name: 'Pain au chocolat',      description: 'Masa hojaldrada con corazón de chocolate belga.',       price: '1600', badge: '', visible: true },
-        { id: 'pa3', name: 'Chocotorta Lacan',      description: 'La versión de la casa: más oscura, más densa.',         price: '2400', badge: 'Estrella', visible: true },
-        { id: 'pa4', name: 'Budín de limón',        description: 'Húmedo, glaseado con limón.',                           price: '1800', badge: '', visible: true },
-        { id: 'pa5', name: 'Tarta de frutos rojos', description: 'Masa sablé, crema pastelera y frambuesas.',             price: '2600', badge: '', visible: true },
-        { id: 'pa6', name: 'Alfajor artesanal',     description: 'Dulce de leche, coco y chocolate.',                    price: '1200', badge: '', visible: true },
+        { id: 'pa1', name: 'Croissant de Manteca',  description: 'Hojaldrado, elaborado en casa cada mañana.',         price: '1800', badge: '', visible: true },
+        { id: 'pa2', name: 'Pain au Chocolat',      description: 'Masa hojaldrada, chocolate belga al 70%.',           price: '2200', badge: '', visible: true },
+        { id: 'pa3', name: 'Tarta del Día',         description: 'Masa de almendras, crema y fruta de estación.',      price: '2800', badge: 'Estrella', visible: true },
+        { id: 'pa4', name: 'Brownie Jungle',        description: 'Chocolate 70%, nueces, sal marina, caramelo.',       price: '2400', badge: '', visible: true },
+        { id: 'pa5', name: 'Budín de Limón',        description: 'Húmedo, con glaseado de limón y jengibre.',         price: '2000', badge: '', visible: true },
+        { id: 'pa6', name: 'Alfajor de Avellanas',  description: 'Masa sin gluten, ganache de avellanas y cacao.',    price: '1800', badge: '', visible: true },
       ],
     },
-    desayunos: {
-      label: 'Desayunos y Meriendas',
+    cocina: {
+      label: 'Cocina',
       items: [
-        { id: 'de1', name: 'Desayuno Lacan',    description: 'Café con leche, 2 medialunas, jugo de naranja natural.', price: '2800', badge: '', visible: true },
-        { id: 'de2', name: 'Desayuno Francés',  description: 'Café, croissant, manteca, mermelada casera.',            price: '3200', badge: '', visible: true },
-        { id: 'de3', name: 'Merienda completa', description: 'Té o café, tostadas con 2 dips, fruta.',                price: '2600', badge: '', visible: true },
-        { id: 'de4', name: 'Licuado + tostadas',description: 'Licuado de fruta de estación, 2 tostadas con dips.',    price: '3500', badge: '', visible: true },
-        { id: 'de5', name: 'Jugo + tostado',    description: 'Jugo natural, tostado jamón y queso.',                   price: '3250', badge: '', visible: true },
-        { id: 'de6', name: 'Yogur con granola', description: 'Yogur natural, granola artesanal, miel.',               price: '2200', badge: '', visible: true },
+        { id: 'co1', name: 'Bowl de la Selva',      description: 'Quinoa, verduras asadas, kale, aliño de tahini.',    price: '5800', badge: 'Signature', visible: true },
+        { id: 'co2', name: 'Tartare de Salmón',     description: 'Salmón, aguacate, pepino, sésamo y limón.',         price: '6800', badge: '', visible: true },
+        { id: 'co3', name: 'Burrata con Pesto',     description: 'Burrata fresca, tomates heirloom, pesto de albahaca.', price: '5400', badge: '', visible: true },
+        { id: 'co4', name: 'Tabla de Origen',       description: 'Quesos artesanales, fiambres curados, pickles, pan.', price: '7800', badge: '', visible: true },
+        { id: 'co5', name: 'Risotto de Hongos',     description: 'Hongos de temporada, parmesano, trufa y manteca.',  price: '6200', badge: '', visible: true },
+        { id: 'co6', name: 'Tarta Vegetal',         description: 'Masa integral, crema de zapallo, semillas tostadas.', price: '4800', badge: '', visible: true },
       ],
     },
-    promos: {
-      label: 'Promos',
+    tragos: {
+      label: 'Tragos & Bebidas',
       items: [
-        { id: 'pr1', name: 'Café Doble + 2 Medialunas',     description: 'El clásico porteño de las mañanas.',            price: '1850', badge: '', visible: true },
-        { id: 'pr2', name: 'Jugo + Tostado',                description: 'Jugo natural de naranja y tostado.',             price: '3250', badge: '', visible: true },
-        { id: 'pr3', name: 'Licuado + Tostadas con dips',   description: 'Licuado de fruta, tostadas y dips de la casa.', price: '3500', badge: '', visible: true },
-        { id: 'pr4', name: '3 Empanadas + Copa de vino',    description: 'Empanadas fritas y copa de Malbec Mendoza.',    price: '3600', badge: '', visible: true },
-        { id: 'pr5', name: 'Happy Hour (18–20hs)',           description: 'Dos cervezas tiradas al precio de una.',        price: '2800', badge: '', visible: true },
-        { id: 'pr6', name: 'Menú del mediodía',             description: 'Plato del día + bebida + postre.',              price: '4500', badge: '', visible: true },
-      ],
-    },
-    especial: {
-      label: 'Especial Lacan',
-      items: [
-        { id: 'es1', name: 'Picada Lacan',                description: 'Queso dambo, muzzarelitas, surimis, jamón crudo y aceitunas. Para dos que pican tres.', price: '7800', badge: 'Estrella', visible: true },
-        { id: 'es2', name: "Soupe à l'Oignon",           description: 'La clásica sopa de cebolla francesa, gratinada con queso gruyère.',                    price: '3600', badge: 'Signature', visible: true },
-        { id: 'es3', name: 'Milanesa Lacan para compartir',description: 'Dos milanesas a caballo con papas fritas. El plato de la casa.',                    price: '7800', badge: 'Para 2', visible: true },
-        { id: 'es4', name: 'Tabla de quesos y fiambres', description: 'Selección de quesos maduros, salames, pickles y pan casero.',                          price: '6500', badge: '', visible: true },
-        { id: 'es5', name: 'Bruschette del barrio',      description: 'Pan de campo tostado, tomate cherry, albahaca y aceite de oliva virgen.',              price: '3200', badge: '', visible: true },
-        { id: 'es6', name: 'Tarta del día',              description: 'Tarta caliente de la temporada, según lo que llegó del mercado.',                     price: '2800', badge: '', visible: true },
-      ],
-    },
-    bar: {
-      label: 'Bar',
-      items: [
-        { id: 'ba1', name: 'Malbec copa',          description: 'Mendoza, uva Malbec. Robusto y frutal.',        price: '1800', badge: '', visible: true },
-        { id: 'ba2', name: 'Torrontés copa',       description: 'Salta, aromático y fresco.',                   price: '1800', badge: '', visible: true },
-        { id: 'ba3', name: 'Cerveza artesanal',    description: 'Rubia o roja, de producción local.',            price: '2200', badge: '', visible: true },
-        { id: 'ba4', name: 'Cerveza importada',    description: 'Stella Artois, Heineken o Guinness.',           price: '2600', badge: '', visible: true },
-        { id: 'ba5', name: 'Fernet con Coca',      description: 'El ritual porteño. Largo o corto.',             price: '2400', badge: '', visible: true },
-        { id: 'ba6', name: 'Aperol Spritz',        description: 'Aperol, Prosecco, soda y naranja.',             price: '3200', badge: '', visible: true },
-        { id: 'ba7', name: 'Botella Malbec',       description: 'Selección de la casa, Mendoza.',                price: '8500', badge: '', visible: true },
-        { id: 'ba8', name: 'Agua mineral',         description: 'Con o sin gas, 500ml.',                        price: '900',  badge: '', visible: true },
-      ],
-    },
-    almacen: {
-      label: 'Almacén Natural',
-      items: [
-        { id: 'al1', name: 'Mermelada artesanal',       description: 'Damasco, frambuesa o higos. Frasco 250g.', price: '2800', badge: '', visible: true },
-        { id: 'al2', name: 'Dulce de leche repostero',  description: 'Artesanal. Frasco 350g.',                  price: '3200', badge: '', visible: true },
-        { id: 'al3', name: 'Aceite de oliva extra virgen',description: 'Cosecha propia, Mendoza. 250ml.',        price: '4500', badge: '', visible: true },
-        { id: 'al4', name: 'Té orgánico seleccionado',  description: 'Caja x10 saquitos.',                      price: '2200', badge: '', visible: true },
-        { id: 'al5', name: 'Café en grano',             description: 'Blend de la casa, 250g.',                 price: '3800', badge: '', visible: true },
-        { id: 'al6', name: 'Granola artesanal',         description: 'Avena, miel, frutos secos. Bolsa 300g.',  price: '2600', badge: '', visible: true },
+        { id: 'tr1', name: 'Aperitivo Verde',       description: 'Gin, pepino, elderflower, tónica y hierbas.',       price: '4200', badge: 'Signature', visible: true },
+        { id: 'tr2', name: 'Jungle Spritz',         description: 'Aperol, pepino, prosecco, romero y naranja.',       price: '4600', badge: '', visible: true },
+        { id: 'tr3', name: 'Agua de Jamaica',       description: 'Jamaica fría con limón y menta fresca.',            price: '2200', badge: '', visible: true },
+        { id: 'tr4', name: 'Kombucha de la Casa',   description: 'Fermentación propia, sabores rotativos.',           price: '2600', badge: '', visible: true },
+        { id: 'tr5', name: 'Copa Natural',          description: 'Vinos biodinámicos seleccionados por la sommelier.', price: '3200', badge: '', visible: true },
+        { id: 'tr6', name: 'Cerveza Artesanal',     description: 'Rubia, amber o stout. Producción local.',           price: '2800', badge: '', visible: true },
+        { id: 'tr7', name: 'Limonada Selvática',    description: 'Limón, jengibre, menta y agua con gas.',            price: '2000', badge: '', visible: true },
+        { id: 'tr8', name: 'Agua Mineral',          description: 'Con o sin gas, 500ml.',                            price: '1200', badge: '', visible: true },
       ],
     },
   },
 
   gallery: [
-    { id: 'g1',  src: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80', title: 'Interior cálido, mesas de madera',        cat: 'Ambiente',   visible: true },
-    { id: 'g2',  src: 'https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=900&q=80', title: 'Café en San Telmo, tarde porteña',         cat: 'Ambiente',   visible: true },
-    { id: 'g3',  src: 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=900&q=80',title: 'Café con leche recién hecho',            cat: 'Café',       visible: true },
-    { id: 'g4',  src: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=900&q=80',title: 'Picada Lacan — quesos y fiambres',       cat: 'Comida',     visible: true },
-    { id: 'g5',  src: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=900&q=80',  title: "Soupe à l'oignon gratinada",             cat: 'Comida',     visible: true },
-    { id: 'g6',  src: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=900&q=80',title: 'Noche de jazz en vivo',                 cat: 'Música',     visible: true },
-    { id: 'g7',  src: 'https://images.unsplash.com/photo-1543168256-418811576931?w=900&q=80',  title: 'Pasaje San Lorenzo, adoquines históricos',cat: 'Barrio',    visible: true },
-    { id: 'g8',  src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&q=80',title: 'Espresso con arte latte',               cat: 'Café',       visible: true },
-    { id: 'g9',  src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=80',  title: 'Milanesa Lacan para compartir',          cat: 'Comida',     visible: true },
-    { id: 'g10', src: 'https://images.unsplash.com/photo-1601933513793-9b0a13c4bb28?w=900&q=80',title: 'Esquina de San Telmo al atardecer',     cat: 'Barrio',     visible: true },
-    { id: 'g11', src: 'https://images.unsplash.com/photo-1464219222984-216ebffaaf85?w=900&q=80',title: 'Copa de Malbec, luz de tarde',          cat: 'Bar',        visible: true },
-    { id: 'g12', src: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a318?w=900&q=80',title: 'Croissant de manteca artesanal',        cat: 'Pastelería', visible: true },
+    { id: 'g1',  src: '/jungla-escondida.jpg', title: 'La jungla escondida', cat: 'Ambiente', visible: true },
+    { id: 'g2',  src: '/jungla-2.jpg',         title: 'El espacio de noche', cat: 'Ambiente', visible: true },
+    { id: 'g3',  src: '/evento-1.jpg',          title: 'Jazz Nights', cat: 'Eventos', visible: true },
+    { id: 'g4',  src: '/evento-2.jpg',          title: 'La selva de noche', cat: 'Eventos', visible: true },
+    { id: 'g5',  src: '/evento-3.jpg',          title: 'Música en vivo', cat: 'Eventos', visible: true },
+    { id: 'g6',  src: '/evento-4.jpg',          title: 'Set de vinilo', cat: 'Eventos', visible: true },
+    { id: 'g7',  src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&q=80', title: 'Espresso de origen', cat: 'Café', visible: true },
+    { id: 'g8',  src: 'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=900&q=80', title: 'Bowl de la Selva', cat: 'Cocina', visible: true },
+    { id: 'g9',  src: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a318?w=900&q=80', title: 'Pastelería del día', cat: 'Pastelería', visible: true },
+    { id: 'g10', src: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=900&q=80', title: 'Tabla de Origen', cat: 'Cocina', visible: true },
+    { id: 'g11', src: 'https://images.unsplash.com/photo-1464219222984-216ebffaaf85?w=900&q=80', title: 'Aperitivo Verde', cat: 'Tragos', visible: true },
+    { id: 'g12', src: 'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=900&q=80', title: 'Café de mañana', cat: 'Café', visible: true },
   ],
 }
 
-// ─── Context ──────────────────────────────────────────────
 const SiteContext = createContext(null)
-const KEY = 'jesuislacan_data'
+const KEY = 'mouli_data'
 
 function load() {
   try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null } catch { return null }
@@ -166,14 +142,13 @@ export function SiteProvider({ children }) {
     setTimeout(() => setToastVisible(false), 2400)
   }, [])
 
-  const updateInfo     = useCallback((info)    => persist({ ...data, info }),    [data, persist])
-  const updateImages   = useCallback((images)  => persist({ ...data, images }),  [data, persist])
-  const updateMenu     = useCallback((menu)    => persist({ ...data, menu }),    [data, persist])
-  const updateGallery  = useCallback((gallery) => persist({ ...data, gallery }), [data, persist])
-  const updatePromos   = useCallback((promos)  => persist({ ...data, promos }),  [data, persist])
-  const resetAll       = useCallback(() => { localStorage.removeItem(KEY); setData(DEFAULT_DATA) }, [])
+  const updateInfo    = useCallback((info)    => persist({ ...data, info }),    [data, persist])
+  const updateImages  = useCallback((images)  => persist({ ...data, images }),  [data, persist])
+  const updateMenu    = useCallback((menu)    => persist({ ...data, menu }),    [data, persist])
+  const updateGallery = useCallback((gallery) => persist({ ...data, gallery }), [data, persist])
+  const updatePromos  = useCallback((promos)  => persist({ ...data, promos }),  [data, persist])
+  const resetAll      = useCallback(() => { localStorage.removeItem(KEY); setData(DEFAULT_DATA) }, [])
 
-  // Expose update helpers that accept the full slice
   const save = { updateInfo, updateImages, updateMenu, updateGallery, updatePromos, resetAll }
 
   return (
