@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const C = {
-  dark:    '#1F2E24',
-  deep:    '#314D39',
-  mid:     '#4C6B50',
-  moss:    '#8B9E78',
-  beige:   '#D9D2C3',
-  cream:   '#F3EFE7',
-  gold:    '#B8A96A',
-  muted:   'rgba(243,239,231,0.6)',
+  dark:      '#0B0B0B',
+  bordo:     '#4A0E1A',
+  champagne: '#D7C3A1',
+  sand:      '#E6D8C3',
+  gold:      '#C9A66B',
+  cream:     '#F5F1EA',
+  muted:     'rgba(245,241,234,0.6)',
 }
 
 function FadeUp({ children, delay = 0, style = {} }) {
@@ -21,163 +20,217 @@ function FadeUp({ children, delay = 0, style = {} }) {
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [])
-  return <motion.div ref={ref} initial={{ opacity: 0, y: 44 }} animate={v ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.75, delay, ease: 'easeOut' }} style={style}>{children}</motion.div>
+  return <motion.div ref={ref} initial={{ opacity: 0, y: 48 }} animate={v ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.82, delay, ease: 'easeOut' }} style={style}>{children}</motion.div>
 }
 
 function FadeIn({ children, delay = 0, dir = 'up', style = {} }) {
   const ref = useRef(null)
   const [v, setV] = useState(false)
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.08 })
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect() } }, { threshold: 0.06 })
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [])
-  const from = { opacity: 0, x: dir === 'left' ? -60 : dir === 'right' ? 60 : 0, y: dir === 'up' ? 44 : 0 }
-  return <motion.div ref={ref} initial={from} animate={v ? { opacity: 1, x: 0, y: 0 } : {}} transition={{ duration: 0.85, delay, ease: 'easeOut' }} style={style}>{children}</motion.div>
+  const from = { opacity: 0, x: dir === 'left' ? -64 : dir === 'right' ? 64 : 0, y: dir === 'up' ? 48 : 0 }
+  return <motion.div ref={ref} initial={from} animate={v ? { opacity: 1, x: 0, y: 0 } : {}} transition={{ duration: 0.9, delay, ease: 'easeOut' }} style={style}>{children}</motion.div>
 }
 
-const pilares = [
+const timeline = [
   {
-    label: 'Lo Natural',
-    sub: 'Plantas, madera, luz, café',
-    color: C.mid,
-    text: 'Las plantas no son decoración — son la arquitectura. Más de cuarenta especies viven en el espacio: helechos colgantes, monsteras trepadoras, pothos que desbordan los estantes. La madera sin barnizar, la luz que entra cruda al mediodía, el aroma del espresso recién extraído.',
+    year: '1920',
+    title: 'Los orígenes',
+    body: 'La familia Lombarda llega desde Italia a las tierras de Rama Caída, San Rafael. Traen consigo el conocimiento ancestral de la viticultura italiana y la visión de construir algo que trascienda generaciones.',
   },
   {
-    label: 'Lo Sensorial',
-    sub: 'Aromas, música, textura, pausa',
-    color: C.gold,
-    text: 'El cortado que llega en cerámica hecha a mano. La playlist analógica que nunca repite. El bowl de quinoa que huele a estación. MOULI es un lugar que se vive antes de que te des cuenta de que lo estás viviendo.',
+    year: '1945',
+    title: 'La primera cosecha',
+    body: 'Después de décadas de cultivo y aprendizaje, se elabora el primer vino de la bodega con uvas propias del viñedo. Un Malbec que hoy es la base de todos nuestros vinos de autor.',
   },
   {
-    label: 'Lo Humano',
-    sub: 'Encuentros, charlas, tiempo real',
-    color: C.moss,
-    text: 'No diseñamos MOULI para el delivery. Lo construimos para quedarse. Para la reunión que dura dos horas más de lo planeado, el trabajo que avanza mejor entre plantas, la conversación que necesitaba ese café para empezar.',
+    year: '1970',
+    title: 'La segunda generación',
+    body: 'Los hijos de los fundadores toman el legado y amplían el viñedo. Se incorporan nuevas variedades: Cabernet Sauvignon, Chardonnay y Torrontés, diversificando la producción sin perder la esencia artesanal.',
+  },
+  {
+    year: '1998',
+    title: 'Turismo enológico',
+    body: 'La bodega abre sus puertas al turismo. Guiados por los propios dueños, los visitantes comienzan a descubrir el proceso completo: desde el viñedo hasta la copa. El turismo enológico boutique nace en Rama Caída.',
+  },
+  {
+    year: '2010',
+    title: 'Vinos de autor',
+    body: 'Se lanza la primera línea de vinos de autor con producción limitada. Cada etiqueta cuenta una historia, lleva el nombre de la familia y representa lo mejor de cada cosecha. Reconocimientos nacionales siguen.',
+  },
+  {
+    year: 'Hoy',
+    title: 'Experiencias únicas',
+    body: 'Terra Lombarda es hoy una de las bodegas boutique más queridas de San Rafael. Seguimos siendo una bodega atendida por sus propios dueños, con la misma pasión de hace 100 años pero con mirada puesta en el futuro.',
   },
 ]
 
-export default function NuestraSelva() {
+const pilares = [
+  {
+    label: 'Tradición',
+    sub: 'Más de 100 años de historia vitivinícola',
+    color: C.gold,
+    text: 'Cada botella de Terra Lombarda lleva en su interior más de un siglo de aprendizaje. Las técnicas que heredamos de nuestros fundadores conviven con la innovación enológica contemporánea. No renunciamos a ninguno de los dos mundos.',
+  },
+  {
+    label: 'Autenticidad',
+    sub: 'Atendida por sus propios dueños',
+    color: C.champagne,
+    text: 'No somos una bodega corporativa. Cuando venís a visitarnos, nos encontrás a nosotros. El enólogo que explica la cata es quien elaboró el vino. La persona que te recibe es quien cuida el viñedo. Esa cercanía no tiene precio.',
+  },
+  {
+    label: 'Terroir',
+    sub: 'Rama Caída, San Rafael, Mendoza',
+    color: C.sand,
+    text: 'Nuestro suelo arenoso, el clima semi-árido y los vientos de la cordillera crean condiciones únicas para la vid. Rama Caída es un secreto bien guardado de San Rafael, y nuestros vinos lo expresan en cada sorbo.',
+  },
+]
+
+export default function Historia() {
   const heroRef = useRef(null)
   const { scrollY } = useScroll()
   const imgY = useTransform(scrollY, [0, 600], [0, 140])
 
   return (
-    <div>
+    <div style={{ background: C.dark }}>
       {/* HERO */}
-      <section ref={heroRef} style={{ position: 'relative', height: '72vh', minHeight: 520, overflow: 'hidden', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+      <section ref={heroRef} style={{ position: 'relative', height: '72vh', minHeight: 540, overflow: 'hidden', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
         <motion.div style={{ position: 'absolute', inset: '-15%', y: imgY }}>
-          <img src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=1600&q=80" alt="Nuestra Selva"
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1800&q=85" alt="Viñedos Terra Lombarda"
             style={{ width: '100%', height: '130%', objectFit: 'cover' }} />
         </motion.div>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(31,46,36,0.25) 0%, rgba(20,32,22,0.88) 100%)' }} />
-        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px 88px' }}>
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(11,11,11,0.25) 0%, rgba(11,11,11,0.92) 100%)' }} />
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 28px 96px' }}>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.44em', color: C.gold, textTransform: 'uppercase', marginBottom: 18 }}>
-            — Thames 1786, Palermo —
+            style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.5em', color: C.gold, textTransform: 'uppercase', marginBottom: 22 }}>
+            — Rama Caída · San Rafael · Desde 1920 —
           </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38 }}
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(46px, 8vw, 96px)', color: C.cream, lineHeight: 0.95, fontWeight: 400, letterSpacing: '0.04em', marginBottom: 18 }}>
-            Nuestra Selva
+          <motion.h1 initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38 }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(48px, 8vw, 100px)', color: C.cream, lineHeight: 0.92, fontWeight: 400, letterSpacing: '0.04em', marginBottom: 22 }}>
+            Nuestra Historia
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.56 }}
-            style={{ fontFamily: "'EB Garamond', serif", fontSize: 20, color: C.gold, fontStyle: 'italic', marginBottom: 0 }}>
-            "La jungla escondida en Palermo."
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: C.gold, fontStyle: 'italic', marginBottom: 0, opacity: 0.9 }}>
+            "Más de 100 años de pasión por el vino."
           </motion.p>
-          <motion.div initial={{ width: 0 }} animate={{ width: 56 }} transition={{ delay: 0.72, duration: 0.5 }}
-            style={{ height: 1.5, background: C.gold, margin: '20px auto 0', opacity: 0.7 }} />
+          <motion.div initial={{ width: 0 }} animate={{ width: 60 }} transition={{ delay: 0.72, duration: 0.6 }}
+            style={{ height: 1.5, background: C.gold, margin: '22px auto 0', opacity: 0.65 }} />
         </div>
       </section>
 
-      {/* NARRATIVA */}
-      <section style={{ maxWidth: 860, margin: '0 auto', padding: '100px 28px' }}>
-        {[
-          {
-            tag: 'El Origen',
-            title: 'Una jungla que nació de una pregunta',
-            body: [
-              'MOULI empezó de una manera simple: queríamos un lugar donde quedarse. No un bar de paso, no un café donde la presión de desocupar la mesa se siente en el air. Un espacio real, con plantas reales, con café de verdad.',
-              'El nombre viene del sánscrito. Mouli significa "corona" o "cima" — lo más alto. Pero también evoca algo más orgánico: un punto de encuentro, el centro de algo vivo. Eso quisimos construir en Palermo.',
-            ],
-          },
-          {
-            tag: 'El Espacio',
-            title: 'La selva que creció adentro',
-            body: [
-              'Antes de pensar en el menú, pensamos en las plantas. Cada especie fue elegida por su capacidad de crear atmósfera: las monsteras que filtran la luz, los helechos que humedecen el ambiente, las pothos que trepan por los estantes de madera.',
-              'El resultado es un espacio que se transforma con las estaciones. En verano, la luz entra cruda y las plantas explotan. En invierno, la selva se vuelve refugio — oscura, cálida, envolvente.',
-            ],
-          },
-          {
-            tag: 'El Café',
-            title: 'De origen único, siempre',
-            body: [
-              'Trabajamos con tostadores seleccionados que priorizan el origen único y la trazabilidad. Cada mes rotamos la variedad del filtrado y del espresso, para que cada visita tenga algo nuevo que descubrir.',
-              'El equipo de baristas conoce cada variedad que sirven. Pueden hablar del terroir del café etíope lo mismo que del proceso de fermentación del costarricense. Pero no hace falta saber nada — alcanza con pedirlo y confiar.',
-            ],
-          },
-          {
-            tag: 'La Cocina',
-            title: 'Estación, origen, honestidad',
-            body: [
-              'La carta cambia cada dos meses según lo que ofrece la estación. Trabajamos con productores locales del cinturón verde de Buenos Aires. Nada congelado, nada artificial, nada que no podamos rastrear hasta su origen.',
-              'El brunch del domingo es una institución propia: largo, generoso, sin apuro. La cocina del mediodía combina técnica moderna con ingredientes simples. Todo tiene nombres directos: lo que dice el menú es lo que llega al plato.',
-            ],
-          },
-        ].map(({ tag, title, body }, i) => (
-          <FadeUp key={tag} delay={0} style={{ marginBottom: 76, paddingLeft: i % 2 === 1 ? 30 : 0, borderLeft: i % 2 === 1 ? `2px solid rgba(76,107,80,0.35)` : 'none' }}>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.32em', color: C.gold, textTransform: 'uppercase', marginBottom: 14 }}>{tag}</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px, 3.5vw, 42px)', color: C.cream, fontWeight: 400, marginBottom: 24, lineHeight: 1.2 }}>{title}</h2>
-            {body.map((p, j) => (
-              <p key={j} style={{ fontFamily: "'EB Garamond', serif", fontSize: 19, color: C.muted, lineHeight: 1.9, marginBottom: 18 }}>{p}</p>
-            ))}
-          </FadeUp>
-        ))}
+      {/* INTRO NARRATIVA */}
+      <section style={{ maxWidth: 860, margin: '0 auto', padding: '100px 32px 80px' }}>
+        <FadeUp>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.42em', color: C.gold, textTransform: 'uppercase', marginBottom: 22 }}>Quiénes somos</p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 3.5vw, 48px)', color: C.cream, fontWeight: 400, marginBottom: 30, lineHeight: 1.15 }}>
+            Una familia. Un viñedo. Una pasión que dura más de un siglo.
+          </h2>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, color: C.muted, lineHeight: 2.05, marginBottom: 24 }}>
+            La Bodega Terra Lombarda nació en las tierras de Rama Caída, en el corazón de San Rafael, Mendoza. Fundada por inmigrantes italianos que trajeron consigo el amor por la vid y el saber hacer del vino artesanal, la bodega ha permanecido fiel a esa herencia durante más de cien años.
+          </p>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, color: C.muted, lineHeight: 2.05 }}>
+            Hoy somos una bodega boutique atendida por sus propios dueños. No hay intermediarios entre vos y la experiencia. Cada cata, cada recorrido, cada copa que servimos lleva el compromiso de quienes cuidan el viñedo con sus propias manos.
+          </p>
+        </FadeUp>
       </section>
 
-      {/* PALERMO */}
-      <section style={{ background: C.deep, padding: '100px 28px' }}>
-        <div style={{ maxWidth: 1320, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 68, alignItems: 'center' }}>
-          <FadeIn dir="left">
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.32em', color: C.gold, textTransform: 'uppercase', marginBottom: 16 }}>Palermo</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(30px, 3.5vw, 46px)', color: C.cream, fontWeight: 400, marginBottom: 24, lineHeight: 1.15 }}>El barrio que nos eligió</h2>
-            <p style={{ fontFamily: "'EB Garamond', serif", fontSize: 19, color: C.muted, lineHeight: 1.9, marginBottom: 20 }}>
-              Palermo cambió muchas veces. Del barrio obrero al arty, del arty al turístico, del turístico al que volvió a ser de los de siempre — con capas nuevas encima. Thames 1786 está en ese Palermo de síntesis.
-            </p>
-            <p style={{ fontFamily: "'EB Garamond', serif", fontSize: 19, color: C.muted, lineHeight: 1.9 }}>
-              A pasos del bosque, cerca de las plazas donde la gente lleva a sus perros los domingos a la mañana. En una cuadra tranquila, con árboles que tocan los balcones. MOULI llegó a este lugar porque aquí ya había algo selvático.
-            </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 34 }}>
-              {['Palermo Soho', 'Bosques de Palermo', 'Plazas y parques', 'Barrio artístico'].map(p => (
-                <div key={p} style={{ background: 'rgba(31,46,36,0.7)', padding: '12px 16px', display: 'flex', gap: 10, alignItems: 'center', border: '1px solid rgba(76,107,80,0.2)' }}>
-                  <span style={{ color: C.gold, fontSize: 12 }}>✦</span>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: C.cream }}>{p}</span>
+      {/* TIMELINE */}
+      <section style={{ padding: '80px 32px 100px', background: '#0d0d0d' }}>
+        <div style={{ maxWidth: 920, margin: '0 auto' }}>
+          <FadeUp style={{ textAlign: 'center', marginBottom: 80 }}>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.42em', color: C.gold, textTransform: 'uppercase', marginBottom: 18 }}>Cronología</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 4.5vw, 54px)', color: C.cream, fontWeight: 400 }}>El camino de la familia</h2>
+          </FadeUp>
+
+          <div style={{ position: 'relative' }}>
+            {/* línea central */}
+            <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 1, background: 'linear-gradient(to bottom, transparent, rgba(201,166,107,0.4) 10%, rgba(201,166,107,0.4) 90%, transparent)', transform: 'translateX(-50%)' }} className="timeline-line" />
+
+            {timeline.map((item, i) => (
+              <FadeUp key={item.year} delay={i * 0.08} style={{ marginBottom: 56 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 60px 1fr', gap: 0, alignItems: 'start' }}>
+                  {i % 2 === 0 ? (
+                    <>
+                      <div style={{ paddingRight: 40, textAlign: 'right' }}>
+                        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 48, color: C.gold, fontWeight: 700, lineHeight: 1, display: 'block', marginBottom: 10 }}>{item.year}</span>
+                        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, color: C.cream, fontWeight: 400, marginBottom: 12 }}>{item.title}</h3>
+                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, color: C.muted, lineHeight: 1.85 }}>{item.body}</p>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 12 }}>
+                        <div style={{ width: 14, height: 14, borderRadius: '50%', background: C.gold, border: '3px solid #0d0d0d', boxShadow: `0 0 0 1px ${C.gold}` }} />
+                      </div>
+                      <div />
+                    </>
+                  ) : (
+                    <>
+                      <div />
+                      <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 12 }}>
+                        <div style={{ width: 14, height: 14, borderRadius: '50%', background: C.champagne, border: '3px solid #0d0d0d', boxShadow: `0 0 0 1px ${C.champagne}` }} />
+                      </div>
+                      <div style={{ paddingLeft: 40 }}>
+                        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 48, color: C.champagne, fontWeight: 700, lineHeight: 1, display: 'block', marginBottom: 10 }}>{item.year}</span>
+                        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, color: C.cream, fontWeight: 400, marginBottom: 12 }}>{item.title}</h3>
+                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, color: C.muted, lineHeight: 1.85 }}>{item.body}</p>
+                      </div>
+                    </>
+                  )}
                 </div>
-              ))}
-            </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOTO + TEXTO */}
+      <section style={{ padding: '100px 32px', background: C.dark }}>
+        <div style={{ maxWidth: 1380, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 80, alignItems: 'center' }}>
+          <FadeIn dir="left">
+            <img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?w=900&q=85" alt="Barricas de la bodega"
+              style={{ width: '100%', height: 560, objectFit: 'cover' }} />
           </FadeIn>
-          <FadeIn dir="right" delay={0.1}>
-            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80" alt="Palermo"
-              style={{ width: '100%', height: 500, objectFit: 'cover' }} />
+          <FadeIn dir="right" delay={0.12}>
+            <div>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.42em', color: C.gold, textTransform: 'uppercase', marginBottom: 20 }}>La bodega</p>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 4vw, 50px)', color: C.cream, fontWeight: 400, marginBottom: 26, lineHeight: 1.1 }}>
+                El espacio que guarda<br /><em style={{ color: C.gold, fontStyle: 'italic' }}>cien años de vinos</em>
+              </h2>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: C.muted, lineHeight: 2, marginBottom: 22 }}>
+                La bodega original sigue en pie. Sus paredes de adobe, sus barricas centenarias y el aroma a vino que impregna cada rincón cuentan una historia que ningún libro puede replicar.
+              </p>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: C.muted, lineHeight: 2, marginBottom: 40 }}>
+                Cuando recorrés la bodega con nosotros, no solo ves el proceso de elaboración del vino. Sos parte de una historia que lleva más de 100 años escribiéndose en el corazón de San Rafael.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                {['Cubillos 4300, Ruta 173', 'Rama Caída, San Rafael', 'Mendoza, Argentina', 'Bodega activa desde 1920'].map(p => (
+                  <div key={p} style={{ background: 'rgba(201,166,107,0.06)', padding: '12px 16px', display: 'flex', gap: 10, alignItems: 'center', border: '1px solid rgba(201,166,107,0.15)' }}>
+                    <span style={{ color: C.gold, fontSize: 11 }}>✦</span>
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: C.cream, opacity: 0.85 }}>{p}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </FadeIn>
         </div>
       </section>
 
       {/* PILARES */}
-      <section style={{ padding: '100px 28px' }}>
-        <div style={{ maxWidth: 1320, margin: '0 auto' }}>
-          <FadeUp style={{ textAlign: 'center', marginBottom: 68 }}>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.36em', color: C.gold, textTransform: 'uppercase', marginBottom: 14 }}>Nuestra filosofía</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4vw, 52px)', color: C.cream, fontWeight: 400 }}>Los tres pilares de MOULI</h2>
+      <section style={{ padding: '100px 32px', background: '#0d0d0d' }}>
+        <div style={{ maxWidth: 1380, margin: '0 auto' }}>
+          <FadeUp style={{ textAlign: 'center', marginBottom: 72 }}>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.42em', color: C.gold, textTransform: 'uppercase', marginBottom: 18 }}>Nuestra filosofía</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4.5vw, 54px)', color: C.cream, fontWeight: 400 }}>Los pilares de Terra Lombarda</h2>
           </FadeUp>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
             {pilares.map(({ label, sub, color, text }) => (
               <FadeUp key={label}>
-                <div style={{ padding: '42px 34px', border: '1px solid rgba(76,107,80,0.2)', background: 'rgba(49,77,57,0.3)', height: '100%' }}>
-                  <div style={{ width: 36, height: 2, background: color, marginBottom: 24 }} />
-                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, color, fontWeight: 500, marginBottom: 8 }}>{label}</h3>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.muted, marginBottom: 22 }}>{sub}</p>
-                  <p style={{ fontFamily: "'EB Garamond', serif", fontSize: 18, color: C.muted, lineHeight: 1.85 }}>{text}</p>
+                <div style={{ padding: '44px 36px', border: '1px solid rgba(201,166,107,0.15)', background: 'rgba(201,166,107,0.03)', height: '100%' }}>
+                  <div style={{ width: 40, height: 2, background: color, marginBottom: 28, opacity: 0.8 }} />
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 40, color, fontWeight: 500, marginBottom: 10 }}>{label}</h3>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.muted, marginBottom: 24 }}>{sub}</p>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: C.muted, lineHeight: 1.95 }}>{text}</p>
                 </div>
               </FadeUp>
             ))}
@@ -186,31 +239,37 @@ export default function NuestraSelva() {
       </section>
 
       {/* CTA */}
-      <section style={{ background: C.deep, padding: '88px 28px', textAlign: 'center' }}>
+      <section style={{ background: C.bordo, padding: '96px 32px', textAlign: 'center' }}>
         <FadeUp>
-          <p style={{ fontFamily: "'EB Garamond', serif", fontSize: 26, color: C.gold, fontStyle: 'italic', marginBottom: 36, lineHeight: 1.5 }}>
-            "Una pausa en la jungla de Palermo."
+          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: C.champagne, fontStyle: 'italic', marginBottom: 38, lineHeight: 1.5, opacity: 0.9 }}>
+            "Cien años de historia,<br />un solo destino: el vino."
           </p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/menu" style={{ textDecoration: 'none' }}>
+            <Link to="/experiencias" style={{ textDecoration: 'none' }}>
               <button
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.dark, background: C.gold, border: `2px solid ${C.gold}`, padding: '14px 38px', cursor: 'pointer', transition: 'all 0.28s' }}
+                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.dark, background: C.gold, border: `2px solid ${C.gold}`, padding: '15px 40px', cursor: 'pointer', transition: 'all 0.3s' }}
                 onMouseEnter={e => { e.target.style.background = 'transparent'; e.target.style.color = C.gold }}
                 onMouseLeave={e => { e.target.style.background = C.gold; e.target.style.color = C.dark }}>
-                Ver la Carta
+                Ver Experiencias
               </button>
             </Link>
             <Link to="/contacto" style={{ textDecoration: 'none' }}>
               <button
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.gold, background: 'transparent', border: `2px solid ${C.gold}`, padding: '14px 38px', cursor: 'pointer', transition: 'all 0.28s' }}
+                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.gold, background: 'transparent', border: `2px solid ${C.gold}`, padding: '15px 40px', cursor: 'pointer', transition: 'all 0.3s' }}
                 onMouseEnter={e => { e.target.style.background = C.gold; e.target.style.color = C.dark }}
                 onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = C.gold }}>
-                Reservar Mesa
+                Reservar Visita
               </button>
             </Link>
           </div>
         </FadeUp>
       </section>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .timeline-line { display: none; }
+        }
+      `}</style>
     </div>
   )
 }

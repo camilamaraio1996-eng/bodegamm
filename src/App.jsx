@@ -4,12 +4,12 @@ import { SiteProvider } from './context/SiteContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
-import NuestraSelva from './pages/Nosotros'
-import Menu from './pages/Menu'
+import Historia from './pages/Nosotros'
+import Experiencias from './pages/Menu'
 import Galeria from './pages/Galeria'
 import Contacto from './pages/Contacto'
+import Vinos from './pages/TakeAway'
 import Admin from './pages/Admin'
-import TakeAway from './pages/TakeAway'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -24,13 +24,17 @@ function PublicLayout() {
       <Navbar />
       <main>
         <Routes>
-          <Route path="/"               element={<Home />} />
-          <Route path="/nuestra-selva"  element={<NuestraSelva />} />
-          <Route path="/nosotros"       element={<NuestraSelva />} />
-          <Route path="/menu"           element={<Menu />} />
-          <Route path="/galeria"        element={<Galeria />} />
-          <Route path="/contacto"       element={<Contacto />} />
-          <Route path="/takeaway"       element={<TakeAway />} />
+          <Route path="/"                element={<Home />} />
+          <Route path="/experiencias"    element={<Experiencias />} />
+          <Route path="/nuestra-historia" element={<Historia />} />
+          <Route path="/galeria"         element={<Galeria />} />
+          <Route path="/contacto"        element={<Contacto />} />
+          <Route path="/vinos"           element={<Vinos />} />
+          {/* legacy aliases */}
+          <Route path="/nuestra-selva"   element={<Historia />} />
+          <Route path="/nosotros"        element={<Historia />} />
+          <Route path="/menu"            element={<Experiencias />} />
+          <Route path="/takeaway"        element={<Vinos />} />
         </Routes>
       </main>
       <Footer />

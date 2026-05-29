@@ -3,20 +3,19 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const C = {
-  dark:  '#1F2E24',
-  deep:  '#314D39',
-  cream: '#F3EFE7',
-  gold:  '#B8A96A',
-  mid:   '#4C6B50',
+  dark:  '#0B0B0B',
+  bordo: '#4A0E1A',
+  gold:  '#C9A66B',
+  cream: '#F5F1EA',
+  muted: 'rgba(245,241,234,0.55)',
 }
 
 const links = [
-  { label: 'Inicio',    to: '/' },
-  { label: 'Menú',      to: '/menu' },
-  { label: 'Take Away', to: '/takeaway' },
-  { label: 'Nosotros',  to: '/nuestra-selva' },
-  { label: 'Eventos',   to: '/galeria' },
-  { label: 'Reservas',  to: '/contacto' },
+  { label: 'Inicio',          to: '/' },
+  { label: 'Experiencias',    to: '/experiencias' },
+  { label: 'Nuestra Historia', to: '/nuestra-historia' },
+  { label: 'Vinos',           to: '/vinos' },
+  { label: 'Galería',         to: '/galeria' },
 ]
 
 export default function Navbar() {
@@ -25,7 +24,7 @@ export default function Navbar() {
   const location = useLocation()
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 50)
+    const fn = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', fn)
     return () => window.removeEventListener('scroll', fn)
   }, [])
@@ -36,45 +35,45 @@ export default function Navbar() {
     <>
       <header style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 999,
-        transition: 'all 0.45s ease',
-        background: scrolled ? 'rgba(31,46,36,0.94)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(76,107,80,0.3)' : 'none',
+        transition: 'all 0.5s ease',
+        background: scrolled ? 'rgba(11,11,11,0.96)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(24px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(201,166,107,0.15)' : 'none',
       }}>
-        <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 76 }}>
+        <div style={{ maxWidth: 1380, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 80 }}>
 
           <Link to="/" style={{ textDecoration: 'none' }}>
             <div style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.1 }}>
-              <div style={{ color: C.cream, fontSize: 22, fontWeight: 600, letterSpacing: '0.22em' }}>MOULI</div>
-              <div style={{ color: C.gold, fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', marginTop: 3, opacity: 0.85 }}>Café · Cocina · Encuentros</div>
+              <div style={{ color: C.cream, fontSize: 18, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Terra Lombarda</div>
+              <div style={{ color: C.gold, fontSize: 8, letterSpacing: '0.38em', textTransform: 'uppercase', marginTop: 4, opacity: 0.9 }}>Bodega Boutique · San Rafael</div>
             </div>
           </Link>
 
-          <nav style={{ display: 'flex', gap: 36, alignItems: 'center' }} className="desktop-nav">
+          <nav style={{ display: 'flex', gap: 32, alignItems: 'center' }} className="desktop-nav">
             {links.map(l => (
               <Link key={l.to} to={l.to}
                 style={{
-                  fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 500,
-                  letterSpacing: '0.14em', textTransform: 'uppercase',
+                  fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 500,
+                  letterSpacing: '0.16em', textTransform: 'uppercase',
                   color: location.pathname === l.to ? C.gold : C.cream,
                   textDecoration: 'none', transition: 'color 0.25s',
-                  borderBottom: location.pathname === l.to ? `1.5px solid ${C.gold}` : '1.5px solid transparent',
-                  paddingBottom: 2, opacity: location.pathname === l.to ? 1 : 0.85,
+                  borderBottom: location.pathname === l.to ? `1px solid ${C.gold}` : '1px solid transparent',
+                  paddingBottom: 2, opacity: location.pathname === l.to ? 1 : 0.8,
                 }}
                 onMouseEnter={e => { e.currentTarget.style.color = C.gold; e.currentTarget.style.opacity = '1' }}
-                onMouseLeave={e => { e.currentTarget.style.color = location.pathname === l.to ? C.gold : C.cream; e.currentTarget.style.opacity = location.pathname === l.to ? '1' : '0.85' }}
+                onMouseLeave={e => { e.currentTarget.style.color = location.pathname === l.to ? C.gold : C.cream; e.currentTarget.style.opacity = location.pathname === l.to ? '1' : '0.8' }}
               >{l.label}</Link>
             ))}
 
             <Link to="/contacto" style={{ textDecoration: 'none' }}>
               <div style={{
-                fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600,
-                letterSpacing: '0.16em', textTransform: 'uppercase',
+                fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 600,
+                letterSpacing: '0.2em', textTransform: 'uppercase',
                 color: C.dark, background: C.gold,
-                padding: '10px 22px', transition: 'all 0.25s', cursor: 'pointer',
+                padding: '11px 24px', transition: 'all 0.3s', cursor: 'pointer',
               }}
-                onMouseEnter={e => e.currentTarget.style.background = '#cfc080'}
-                onMouseLeave={e => e.currentTarget.style.background = C.gold}
+                onMouseEnter={e => { e.currentTarget.style.background = '#d9ba88'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.gold; e.currentTarget.style.transform = 'none' }}
               >
                 Reservar
               </div>
@@ -97,29 +96,30 @@ export default function Navbar() {
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'tween', duration: 0.35, ease: 'easeInOut' }}
+            transition={{ type: 'tween', duration: 0.38, ease: 'easeInOut' }}
             style={{
               position: 'fixed', inset: 0, zIndex: 998,
-              background: 'rgba(31,46,36,0.98)',
-              backdropFilter: 'blur(24px)',
+              background: 'rgba(11,11,11,0.98)',
+              backdropFilter: 'blur(28px)',
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center',
-              gap: 40,
+              gap: 36,
             }}
           >
-            <div style={{ position: 'absolute', top: 28, left: 28 }}>
-              <div style={{ fontFamily: "'Cormorant Garamond', serif", color: C.cream, fontSize: 20, fontWeight: 600, letterSpacing: '0.22em' }}>MOULI</div>
+            <div style={{ position: 'absolute', top: 28, left: 32 }}>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", color: C.cream, fontSize: 18, fontWeight: 600, letterSpacing: '0.18em' }}>Terra Lombarda</div>
+              <div style={{ color: C.gold, fontSize: 8, letterSpacing: '0.35em', textTransform: 'uppercase', marginTop: 3, opacity: 0.85 }}>Bodega Boutique</div>
             </div>
 
-            {links.map((l, i) => (
+            {[...links, { label: 'Reservar', to: '/contacto' }].map((l, i) => (
               <motion.div key={l.to}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 + i * 0.06 }}
+                transition={{ delay: 0.07 + i * 0.07 }}
               >
                 <Link to={l.to} style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 'clamp(32px, 8vw, 44px)',
+                  fontSize: 'clamp(30px, 7vw, 42px)',
                   fontWeight: 400,
                   color: location.pathname === l.to ? C.gold : C.cream,
                   textDecoration: 'none',
@@ -130,29 +130,17 @@ export default function Navbar() {
               </motion.div>
             ))}
 
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-              style={{ marginTop: 16 }}>
-              <Link to="/contacto" style={{
-                fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600,
-                letterSpacing: '0.2em', textTransform: 'uppercase',
-                color: C.dark, background: C.gold,
-                padding: '14px 36px', textDecoration: 'none', display: 'inline-block',
-              }}>
-                RESERVAR MESA
-              </Link>
-            </motion.div>
-
-            <div style={{ position: 'absolute', bottom: 40, display: 'flex', gap: 8, alignItems: 'center' }}>
-              <div style={{ width: 28, height: 1, background: 'rgba(243,239,231,0.25)' }} />
-              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.3em', color: 'rgba(243,239,231,0.4)', textTransform: 'uppercase' }}>Palermo · Buenos Aires</span>
-              <div style={{ width: 28, height: 1, background: 'rgba(243,239,231,0.25)' }} />
+            <div style={{ position: 'absolute', bottom: 40, display: 'flex', gap: 10, alignItems: 'center' }}>
+              <div style={{ width: 28, height: 1, background: 'rgba(201,166,107,0.3)' }} />
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, letterSpacing: '0.35em', color: 'rgba(201,166,107,0.5)', textTransform: 'uppercase' }}>Cubillos 4300 · San Rafael · Mendoza</span>
+              <div style={{ width: 28, height: 1, background: 'rgba(201,166,107,0.3)' }} />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <style>{`
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
           .desktop-nav { display: none !important; }
           .hamburger-btn { display: block !important; }
         }
