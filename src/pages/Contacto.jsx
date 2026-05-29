@@ -90,7 +90,7 @@ export default function Contacto() {
       {/* HERO */}
       <section style={{ position: 'relative', minHeight: '46vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', paddingTop: 80, overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
-          <img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=1600&q=80" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src="/foto-sunset-cena.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(11,11,11,0.92) 0%, rgba(74,14,26,0.85) 100%)' }} />
         </div>
         <div style={{ position: 'relative', zIndex: 1, padding: '80px 28px 72px' }}>

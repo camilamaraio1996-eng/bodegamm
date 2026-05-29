@@ -43,7 +43,7 @@ const paquetes = [
     title: 'Cata',
     sub: 'La Experiencia Esencial',
     tagline: 'Descubrí el alma de la bodega',
-    img: 'https://images.unsplash.com/photo-1543218024-57a70143c369?w=900&q=85',
+    img: '/foto-cata.jpg',
     color: C.gold,
     includes: [
       { icon: '🏛️', text: 'Recorrido guiado por la bodega histórica de más de 100 años' },
@@ -58,7 +58,7 @@ const paquetes = [
     title: 'Wine House',
     sub: 'Vino, Sabor y Experiencia',
     tagline: 'Una tarde completa en la bodega',
-    img: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=900&q=85',
+    img: '/foto-sunset-cena.jpg',
     color: C.champagne,
     includes: [
       { icon: '🏛️', text: 'Recorrido por bodega histórica y visita al viñedo' },
@@ -76,7 +76,7 @@ const paquetes = [
     title: 'Vinos y Fuegos',
     sub: 'La Experiencia Premium',
     tagline: 'El asado más memorable de tu vida',
-    img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=900&q=85',
+    img: '/foto-asado.jpg',
     color: C.sand,
     includes: [
       { icon: '🏛️', text: 'Recorrido completo por bodega y viñedos' },
@@ -100,7 +100,7 @@ export default function Experiencias() {
       {/* HERO */}
       <section ref={heroRef} style={{ position: 'relative', height: '70vh', minHeight: 520, overflow: 'hidden', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
         <motion.div style={{ position: 'absolute', inset: '-15%', y: imgY }}>
-          <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1800&q=85" alt="Experiencias Terra Lombarda"
+          <img src="/foto-evento-vinedo.jpg" alt="Experiencias Terra Lombarda"
             style={{ width: '100%', height: '130%', objectFit: 'cover' }} />
         </motion.div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(11,11,11,0.3) 0%, rgba(11,11,11,0.95) 100%)' }} />

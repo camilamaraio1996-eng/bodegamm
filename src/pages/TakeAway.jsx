@@ -39,12 +39,12 @@ function FadeIn({ children, delay = 0, dir = 'up', style = {} }) {
 function WineCard({ vino, index }) {
   const [hov, setHov] = useState(false)
   const images = [
-    'https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?w=500&q=80',
-    'https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=500&q=80',
-    'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=500&q=80',
-    'https://images.unsplash.com/photo-1543218024-57a70143c369?w=500&q=80',
-    'https://images.unsplash.com/photo-1474722883778-792e7990302f?w=500&q=80',
-    'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=500&q=80',
+    '/foto-bottle.jpg',
+    '/foto-cata.jpg',
+    '/foto-sunset-cena.jpg',
+    '/foto-bodega-interior.jpg',
+    '/foto-asado.jpg',
+    '/foto-vinedo-sunset.jpg',
   ]
   return (
     <motion.div
@@ -102,7 +102,7 @@ export default function Vinos() {
       {/* HERO */}
       <section style={{ position: 'relative', minHeight: '56vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', paddingTop: 80, overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
-          <img src="https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=1800&q=80" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src="/foto-bottle.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(11,11,11,0.5) 0%, rgba(11,11,11,0.97) 100%)' }} />
         </div>
         <div style={{ position: 'relative', zIndex: 1, padding: '80px 28px 72px' }}>

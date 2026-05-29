@@ -99,7 +99,7 @@ export default function Historia() {
       {/* HERO */}
       <section ref={heroRef} style={{ position: 'relative', height: '72vh', minHeight: 540, overflow: 'hidden', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
         <motion.div style={{ position: 'absolute', inset: '-15%', y: imgY }}>
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1800&q=85" alt="Viñedos Terra Lombarda"
+          <img src="/foto-vinedo-sunset.jpg" alt="Viñedos Terra Lombarda"
             style={{ width: '100%', height: '130%', objectFit: 'cover' }} />
         </motion.div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(11,11,11,0.25) 0%, rgba(11,11,11,0.92) 100%)' }} />
@@ -188,7 +188,7 @@ export default function Historia() {
       <section style={{ padding: '100px 32px', background: C.dark }}>
         <div style={{ maxWidth: 1380, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 80, alignItems: 'center' }}>
           <FadeIn dir="left">
-            <img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?w=900&q=85" alt="Barricas de la bodega"
+            <img src="/foto-bodega-interior.jpg" alt="Bodega Terra Lombarda"
               style={{ width: '100%', height: 560, objectFit: 'cover' }} />
           </FadeIn>
           <FadeIn dir="right" delay={0.12}>

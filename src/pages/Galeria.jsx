@@ -52,42 +52,42 @@ const eventsList = [
     day: 'Cada Viernes y Sábado',
     title: 'Wine Lovers',
     desc: 'Noches de encuentro en el viñedo. Música en vivo, vinos de autor y la magia del atardecer mendocino.',
-    img: '/evento-musica.jpg',
+    img: '/foto-noche-cena.jpg',
     tag: 'Música · Vino',
   },
   {
     day: 'Domingos',
     title: 'Sunset Sessions',
     desc: 'El sol se pone entre las vides. Una copa en mano, tiempo para desconectar y disfrutar del paisaje.',
-    img: 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?w=700&q=80',
+    img: '/foto-evento-vinedo.jpg',
     tag: 'Atardecer',
   },
   {
     day: 'Mensual',
     title: 'Degustaciones Especiales',
     desc: 'Catas temáticas con nuestro enólogo. Varietales, cosechas históricas y blend verticales.',
-    img: 'https://images.unsplash.com/photo-1543218024-57a70143c369?w=700&q=80',
+    img: '/foto-bodega-interior.jpg',
     tag: 'Enología',
   },
   {
     day: 'A Convenir',
     title: 'Eventos Privados',
     desc: 'Casamientos boutique, cumpleaños, reuniones corporativas. La bodega como escenario único.',
-    img: '/evento-ambiente.jpg',
+    img: '/foto-sunset-cena.jpg',
     tag: 'Privado',
   },
   {
     day: 'Temporada',
     title: 'Yoga & Vino',
     desc: 'Sesión de yoga entre los viñedos al amanecer, seguida de degustación con desayuno.',
-    img: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=700&q=80',
+    img: '/foto-vinedo-sunset.jpg',
     tag: 'Bienestar',
   },
   {
     day: 'A Convenir',
     title: 'Experiencias Corporativas',
     desc: 'Team building, lanzamientos y cenas de empresa en un entorno único e inolvidable.',
-    img: '/evento-noche.jpg',
+    img: '/foto-noche-cena.jpg',
     tag: 'Corporativo',
   },
 ]
@@ -121,7 +121,7 @@ export default function Galeria() {
       {/* HERO */}
       <section style={{ position: 'relative', minHeight: '46vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', paddingTop: 80, overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
-          <img src="https://images.unsplash.com/photo-1543730435960-55bc92d5a1a0?w=1600&q=75" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src="/foto-noche-luna.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(11,11,11,0.88) 0%, rgba(74,14,26,0.8) 100%)' }} />
         </div>
         <div style={{ position: 'relative', zIndex: 1, padding: '80px 28px 72px' }}>

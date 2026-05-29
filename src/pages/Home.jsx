@@ -47,21 +47,21 @@ const experiencias = [
   {
     title: 'Cata',
     sub: 'La Experiencia Esencial',
-    img: 'https://images.unsplash.com/photo-1543218024-57a70143c369?w=800&q=85',
+    img: '/foto-cata.jpg',
     includes: ['Recorrido por bodega histórica', 'Visita al viñedo', 'Degustación guiada de 3 vinos'],
     color: C.gold,
   },
   {
     title: 'Wine House',
     sub: 'Vino, Sabor y Experiencia',
-    img: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=800&q=85',
+    img: '/foto-sunset-cena.jpg',
     includes: ['Recorrido por bodega y viñedo', 'Degustación de 4 vinos de autor', 'Tabla de fiambres y quesos', 'Panificados caseros · Dips · Postre'],
     color: C.champagne,
   },
   {
     title: 'Vinos y Fuegos',
     sub: 'La Experiencia Premium',
-    img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=800&q=85',
+    img: '/foto-asado.jpg',
     includes: ['Recorrido completo · Empanadas fritas', 'Asado: vacío, costillas, chorizos, matambre', 'Ensaladas · Flan casero', 'Maridaje ilimitado con vinos de la bodega'],
     color: C.sand,
   },
@@ -69,8 +69,8 @@ const experiencias = [
 
 const eventos = [
   { day: 'Cada Viernes y Sábado', title: 'Wine Lovers', desc: 'Noches de encuentro, música en vivo y vinos de autor en los viñedos.', img: '/evento-musica.jpg' },
-  { day: 'Domingos al Atardecer', title: 'Sunset Sessions', desc: 'El sol se pone entre las vides. Copa en mano, tiempo propio.', img: 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?w=700&q=80' },
-  { day: 'A Convenir', title: 'Eventos Privados', desc: 'Casamientos boutique, cumpleaños, corporativos. La bodega como escenario.', img: '/evento-ambiente.jpg' },
+  { day: 'Domingos al Atardecer', title: 'Sunset Sessions', desc: 'El sol se pone entre las vides. Copa en mano, tiempo propio.', img: '/foto-evento-vinedo.jpg' },
+  { day: 'A Convenir', title: 'Eventos Privados', desc: 'Casamientos boutique, cumpleaños, corporativos. La bodega como escenario.', img: '/foto-noche-luna.jpg' },
 ]
 
 const testimonios = [
@@ -169,7 +169,7 @@ export default function Home() {
       <section ref={heroRef} style={{ position: 'relative', height: '100vh', minHeight: 680, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <motion.div style={{ position: 'absolute', inset: '-20%', y: imgY }}>
           <img
-            src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1800&q=90"
+            src="/foto-vinedo-sunset.jpg"
             alt="Viñedos Terra Lombarda"
             style={{ width: '100%', height: '140%', objectFit: 'cover' }}
           />
@@ -253,7 +253,7 @@ export default function Home() {
             <div style={{ position: 'relative' }}>
               <div style={{ overflow: 'hidden' }}>
                 <img
-                  src="https://images.unsplash.com/photo-1474722883778-792e7990302f?w=900&q=85"
+                  src="/foto-bottle.jpg"
                   alt="Barricas Terra Lombarda"
                   style={{ width: '100%', height: 580, objectFit: 'cover' }}
                   className="float-wine-slow"
@@ -334,7 +334,7 @@ export default function Home() {
       {/* ══ EVENTOS ════════════════════════════════════════════════ */}
       <section style={{ position: 'relative', padding: '120px 32px', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
-          <img src="https://images.unsplash.com/photo-1543218024-57a70143c369?w=1800&q=70" alt=""
+          <img src="/foto-noche-cena.jpg" alt=""
             style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(11,11,11,0.9)' }} />
         </div>
@@ -387,10 +387,10 @@ export default function Home() {
             <FadeIn dir="right" delay={0.15}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 {[
-                  { src: '/evento-musica.jpg', title: 'Música y vino' },
-                  { src: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=500&q=80', title: 'Brindis' },
-                  { src: '/evento-ambiente.jpg', title: 'Encuentros' },
-                  { src: '/evento-noche.jpg', title: 'La noche' },
+                  { src: '/foto-cata.jpg', title: 'Degustación' },
+                  { src: '/foto-bodega-interior.jpg', title: 'Recorrido' },
+                  { src: '/foto-noche-cena.jpg', title: 'Encuentros' },
+                  { src: '/foto-noche-luna.jpg', title: 'La noche' },
                 ].map((item, i) => (
                   <motion.div key={i}
                     initial={{ opacity: 0, scale: 0.96 }}
@@ -441,7 +441,7 @@ export default function Home() {
       {/* ══ TESTIMONIOS ════════════════════════════════════════════ */}
       <section style={{ padding: '120px 32px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
-          <img src="https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?w=1600&q=65" alt=""
+          <img src="/foto-sunset-cena.jpg" alt=""
             style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(11,11,11,0.92)' }} />
         </div>
